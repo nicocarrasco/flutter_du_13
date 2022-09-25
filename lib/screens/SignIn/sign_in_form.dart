@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_du_13/constants/colors.dart';
+import 'package:flutter_du_13/services/auth_service.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
-class SignInForm extends StatelessWidget {
+class SignInForm extends StatefulWidget {
   const SignInForm({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<SignInForm> createState() => _SignInFormState();
+}
+
+class _SignInFormState extends State<SignInForm> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  @override
   Widget build(BuildContext context) {
     return Form(
+      key: _formKey,
       child: Column(
         children: <Widget>[
           const SizedBox(height: 40),
@@ -57,12 +68,19 @@ class SignInForm extends StatelessWidget {
               ),
               const SizedBox(height: 18),
               TextFormField(
+                controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
                 cursorColor: primaryColor,
                 decoration: const InputDecoration(
                   hintText: "john.doe@gmail.com",
                   prefixIcon: Icon(Icons.alternate_email, size: 14),
                 ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Veuillez remplir ce champ';
+                  }
+                  return null;
+                },
               )
             ],
           ),
@@ -79,11 +97,18 @@ class SignInForm extends StatelessWidget {
               ),
               const SizedBox(height: 18),
               TextFormField(
+                controller: _passwordController,
                 obscureText: true,
                 decoration: const InputDecoration(
                   hintText: "********",
                   prefixIcon: Icon(Icons.lock, size: 14),
                 ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Veuillez remplir ce champ';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 45),
             ],
@@ -91,7 +116,28 @@ class SignInForm extends StatelessWidget {
           Hero(
             tag: "login_btn",
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () async {
+                if (_formKey.currentState!.validate()) {
+                  final String message = await AuthService().signIn(
+                    emailAddress: _emailController.text,
+                    password: _passwordController.text,
+                  );
+                  if (message != "Success") {
+                    await Fluttertoast.showToast(
+                      msg: message,
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      backgroundColor: errorColor,
+                      webBgColor: "#FF6666",
+                      webShowClose: true,
+                      webPosition: "center",
+                      textColor: backgroundLighterColor,
+                      fontSize: 16.0,
+                      timeInSecForIosWeb: 2,
+                    );
+                  }
+                }
+              },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.zero,
                 shape: RoundedRectangleBorder(
@@ -127,7 +173,7 @@ class SignInForm extends StatelessWidget {
               fontSize: 13,
               fontWeight: FontWeight.w600,
             ),
-            "Vous n’avez pas encore de compte?",
+            "Vous n’avez pas encore de compte ?",
           ),
           const SizedBox(height: 6),
           const Text(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const String errorHex = "FF6666";
+
 const Color primaryDarkerColor = Color(0xFF3958D3);
 const Color primaryColor = Color(0xFF72B2D5);
 const Color primaryLighterColor = Color(0xFFA2FCD7);
@@ -9,3 +11,4 @@ const Color textColor = Color(0xFF000000);
 const Color textLighterColor = Color(0xFF424242);
 const Color placeholderColor = Color(0xFFA9A9A9);
 const Color placeholderLighterColor = Color(0xFFCACACA);
+const Color errorColor = Color(0xFFFF6666);

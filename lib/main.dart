@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: backgroundColor,
         inputDecorationTheme: const InputDecorationTheme(
           filled: true,
+          errorStyle: TextStyle(fontSize: 12, height: 1, color: errorColor),
           prefixIconColor: placeholderColor,
           hintStyle: TextStyle(color: placeholderColor, fontSize: 14),
           fillColor: backgroundLighterColor,
