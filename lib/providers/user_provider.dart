@@ -1,6 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import "package:flutter/material.dart";
 
-class AuthService {
+class UserProvider extends ChangeNotifier {
+  User? _user;
+
+  bool isAuthenticated() => _user != null;
+
   Future<String> signIn({
     required String emailAddress,
     required String password,
@@ -11,6 +16,9 @@ class AuthService {
         email: emailAddress,
         password: password,
       );
+      _user = credential.user;
+      notifyListeners();
+
       return "Success";
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {

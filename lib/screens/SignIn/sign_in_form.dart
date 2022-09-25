@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_du_13/constants/colors.dart';
-import 'package:flutter_du_13/services/auth_service.dart';
+import 'package:flutter_du_13/providers/user_provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({
@@ -118,10 +119,13 @@ class _SignInFormState extends State<SignInForm> {
             child: ElevatedButton(
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
-                  final String message = await AuthService().signIn(
+                  final String message =
+                      await Provider.of<UserProvider>(context, listen: false)
+                          .signIn(
                     emailAddress: _emailController.text,
                     password: _passwordController.text,
                   );
+
                   if (message != "Success") {
                     await Fluttertoast.showToast(
                       msg: message,
