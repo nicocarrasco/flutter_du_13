@@ -2,6 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 
 class UserProvider extends ChangeNotifier {
+  UserProvider() {
+    _user = FirebaseAuth.instance.currentUser;
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      _user = user;
+      notifyListeners();
+    });
+  }
   User? _user;
 
   bool isAuthenticated() => _user != null;
@@ -11,14 +18,10 @@ class UserProvider extends ChangeNotifier {
     required String password,
   }) async {
     try {
-      final UserCredential credential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailAddress,
         password: password,
       );
-      _user = credential.user;
-      notifyListeners();
-
       return "Success";
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {

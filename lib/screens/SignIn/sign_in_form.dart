@@ -22,6 +22,7 @@ class _SignInFormState extends State<SignInForm> {
     return Form(
       key: _formKey,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           const SizedBox(height: 40),
           RichText(
@@ -34,6 +35,9 @@ class _SignInFormState extends State<SignInForm> {
               children: <InlineSpan>[
                 TextSpan(
                   text: 'Flut',
+                  style: TextStyle(
+                    color: textColor,
+                  ),
                 ),
                 TextSpan(
                   text: 'Treize',
@@ -114,58 +118,54 @@ class _SignInFormState extends State<SignInForm> {
               const SizedBox(height: 45),
             ],
           ),
-          Hero(
-            tag: "login_btn",
-            child: ElevatedButton(
-              onPressed: () async {
-                if (_formKey.currentState!.validate()) {
-                  final String message =
-                      await Provider.of<UserProvider>(context, listen: false)
-                          .signIn(
-                    emailAddress: _emailController.text,
-                    password: _passwordController.text,
-                  );
+          ElevatedButton(
+            onPressed: () async {
+              if (_formKey.currentState!.validate()) {
+                final String message =
+                    await Provider.of<UserProvider>(context, listen: false)
+                        .signIn(
+                  emailAddress: _emailController.text,
+                  password: _passwordController.text,
+                );
 
-                  if (message != "Success") {
-                    await Fluttertoast.showToast(
-                      msg: message,
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.BOTTOM,
-                      backgroundColor: errorColor,
-                      webBgColor: "#FF6666",
-                      webShowClose: true,
-                      webPosition: "center",
-                      textColor: backgroundLighterColor,
-                      fontSize: 16.0,
-                      timeInSecForIosWeb: 2,
-                    );
-                  }
+                if (message != "Success") {
+                  await Fluttertoast.showToast(
+                    msg: message,
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    backgroundColor: errorColor,
+                    webBgColor: "#FF6666",
+                    webShowClose: true,
+                    webPosition: "center",
+                    textColor: backgroundLighterColor,
+                    fontSize: 16.0,
+                    timeInSecForIosWeb: 2,
+                  );
                 }
-              },
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.zero,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.zero,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
               ),
-              child: Ink(
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    end: Alignment(2.5, 2.5),
-                    colors: <Color>[primaryDarkerColor, primaryLighterColor],
-                  ),
-                  borderRadius: BorderRadius.circular(15),
+            ),
+            child: Ink(
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  end: Alignment(2.5, 2.5),
+                  colors: <Color>[primaryDarkerColor, primaryLighterColor],
                 ),
-                child: const SizedBox(
-                  width: 300,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 17),
-                    child: Text(
-                      'Se connecter',
-                      textAlign: TextAlign.center,
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                    ),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: const SizedBox(
+                width: 300,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 17),
+                  child: Text(
+                    'Se connecter',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   ),
                 ),
               ),

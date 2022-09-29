@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Needed for toast library, need to update errorHex if errorColor is modified
 const String errorHex = "FF6666";
 
 const Color primaryDarkerColor = Color(0xFF3958D3);
