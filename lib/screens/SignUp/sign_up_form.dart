@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_du_13/constants/colors.dart';
 import 'package:flutter_du_13/providers/user_provider.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-class SignInForm extends StatefulWidget {
-  const SignInForm({
+class SignUpForm extends StatefulWidget {
+  const SignUpForm({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<SignInForm> createState() => _SignInFormState();
+  State<SignUpForm> createState() => _SignUpFormState();
 }
 
-class _SignInFormState extends State<SignInForm> {
+class _SignUpFormState extends State<SignUpForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  String _accountType = "Acheteur";
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -25,7 +27,7 @@ class _SignInFormState extends State<SignInForm> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          const SizedBox(height: 40),
+          const SizedBox(height: 30),
           RichText(
             text: const TextSpan(
               style: TextStyle(
@@ -49,7 +51,7 @@ class _SignInFormState extends State<SignInForm> {
               ],
             ),
           ),
-          const SizedBox(height: 51),
+          const SizedBox(height: 20),
           const Align(
             alignment: Alignment.centerLeft,
             child: Text(
@@ -58,10 +60,112 @@ class _SignInFormState extends State<SignInForm> {
                 fontSize: 25,
                 fontWeight: FontWeight.bold,
               ),
-              "Connectez vous",
+              "Inscription",
             ),
           ),
-          const SizedBox(height: 51),
+          const SizedBox(height: 20),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const Text(
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                ),
+                "Vous êtes...",
+              ),
+              const SizedBox(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(right: 40.0),
+                    decoration: _accountType == "Acheteur"
+                        ? const BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 10.0,
+                                color: primaryColor,
+                              ),
+                            ],
+                          )
+                        : null,
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: InkWell(
+                          splashColor: primaryColor.withAlpha(30),
+                          onTap: () {
+                            setState(() {
+                              _accountType = "Acheteur";
+                            });
+                          },
+                          child: Column(
+                            children: [
+                              SvgPicture.asset(
+                                "images/seller.svg",
+                                height: 75,
+                                fit: BoxFit.scaleDown,
+                              ),
+                              const Text(
+                                "Acheteur",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    decoration: _accountType == "Vendeur"
+                        ? const BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 10.0,
+                                color: primaryColor,
+                              ),
+                            ],
+                          )
+                        : null,
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: InkWell(
+                          splashColor: primaryColor.withAlpha(30),
+                          onTap: () {
+                            setState(() {
+                              _accountType = "Vendeur";
+                            });
+                          },
+                          child: Column(
+                            children: [
+                              SvgPicture.asset(
+                                "images/seller.svg",
+                                height: 75,
+                                fit: BoxFit.scaleDown,
+                              ),
+                              const Text(
+                                "Vendeur",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
+          const SizedBox(height: 30),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -72,7 +176,7 @@ class _SignInFormState extends State<SignInForm> {
                 ),
                 "Adresse email",
               ),
-              const SizedBox(height: 18),
+              const SizedBox(height: 15),
               TextFormField(
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
@@ -101,7 +205,7 @@ class _SignInFormState extends State<SignInForm> {
                 ),
                 "Mot de passe",
               ),
-              const SizedBox(height: 18),
+              const SizedBox(height: 15),
               TextFormField(
                 controller: _passwordController,
                 obscureText: true,
@@ -116,17 +220,18 @@ class _SignInFormState extends State<SignInForm> {
                   return null;
                 },
               ),
-              const SizedBox(height: 45),
             ],
           ),
+          const SizedBox(height: 30),
           ElevatedButton(
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
                 final String message =
                     await Provider.of<UserProvider>(context, listen: false)
-                        .signIn(
+                        .signUp(
                   emailAddress: _emailController.text,
                   password: _passwordController.text,
+                  role: _accountType,
                 );
 
                 if (message != "Success") {
@@ -164,27 +269,19 @@ class _SignInFormState extends State<SignInForm> {
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 17),
                   child: Text(
-                    'Se connecter',
+                    "S'inscrire",
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                   ),
                 ),
               ),
             ),
           ),
-          const SizedBox(height: 45),
-          const Text(
-            style: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
-            ),
-            "Vous n’avez pas encore de compte ?",
-          ),
-          const SizedBox(height: 6),
+          const SizedBox(height: 15),
           TextButton(
-            onPressed: () => context.go('/sign-up'),
+            onPressed: () => context.go('/sign-in'),
             child: const Text(
-              "Créez votre compte ici",
+              "Revenir à l'écran de connexion",
               style: TextStyle(
                 fontSize: 13,
                 decoration: TextDecoration.underline,
