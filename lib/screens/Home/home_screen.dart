@@ -14,14 +14,14 @@ class Product {
   final int price;
 }
 
-class ShopPage extends StatefulWidget {
-  const ShopPage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<ShopPage> createState() => _SearchPageState();
+  State<HomePage> createState() => _SearchPageState();
 }
 
-class _SearchPageState extends State<ShopPage> {
+class _SearchPageState extends State<HomePage> {
   final List<Product> _selectedProduct = <Product>[];
 
   final List<Product> _allProduct = <Product>[
@@ -76,7 +76,7 @@ class _SearchPageState extends State<ShopPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Shop'),
+        title: const Text('Home'),
       ),
       body: Column(
         children: <Widget>[

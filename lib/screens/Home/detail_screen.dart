@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_du_13/screens/Shop/shop_screen.dart';
+import 'package:flutter_du_13/screens/Home/home_screen.dart';
 
 class Detail extends StatelessWidget {
   const Detail({super.key, required this.product, required this.addProduct});

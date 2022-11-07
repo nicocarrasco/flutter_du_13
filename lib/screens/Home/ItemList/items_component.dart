@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../Card/card_component.dart';
 import '../detail_screen.dart';
-import '../shop_screen.dart';
+import '../home_screen.dart';
 
 class ItemList extends StatelessWidget {
   const ItemList({

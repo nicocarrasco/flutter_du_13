@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../shop_screen.dart';
+import '../home_screen.dart';
 
 class ElevatedCard extends StatelessWidget {
   const ElevatedCard({super.key, required this.product});
