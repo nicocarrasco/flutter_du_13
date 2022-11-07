@@ -7,12 +7,28 @@ class UserProvider extends ChangeNotifier {
     _user = FirebaseAuth.instance.currentUser;
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       _user = user;
+      if (_user != null) {
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(_user?.uid)
+            .snapshots()
+            .listen(
+              (DocumentSnapshot<Map<String, dynamic>> event) => {
+                if (event.data()!["role"] != null)
+                  {_role = event.data()!["role"], notifyListeners()}
+              },
+            );
+      }
+
       notifyListeners();
     });
   }
   User? _user;
+  // "Vendeur" or "Acheteur" or null
+  String? _role;
 
   bool isAuthenticated() => _user != null;
+  String? getRole() => _role;
 
   Future<String> signIn({
     required String emailAddress,
