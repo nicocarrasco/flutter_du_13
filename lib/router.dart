@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_du_13/providers/user_provider.dart';
+import 'package:flutter_du_13/screens/Shop/shop_screen.dart';
 import 'package:flutter_du_13/screens/SignIn/sign_in_screen.dart';
 import 'package:flutter_du_13/screens/SignUp/sign_up_screen.dart';
 import 'package:flutter_du_13/ui/bottom_bar.dart';
@@ -52,7 +53,7 @@ class AppRouter {
                 buildPageWithDefaultTransition<void>(
               context: context,
               state: state,
-              child: const SignUpScreen(),
+              child: const ShopPage(),
             ),
           ),
           GoRoute(
