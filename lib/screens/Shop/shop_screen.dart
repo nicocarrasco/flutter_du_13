@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'ItemList/items_component.dart';
 
 class Product {
   const Product({
@@ -111,32 +112,9 @@ class _SearchPageState extends State<ShopPage> {
           ),
           Expanded(
             child: _foundProducts.isNotEmpty
-                ? GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisSpacing: 5,
-                      mainAxisSpacing: 5,
-                      crossAxisCount: 2,
-                    ),
-                    itemCount: _foundProducts.length,
-                    padding:
-                        const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-                    itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute<Widget>(
-                              builder: (BuildContext context) => Detail(
-                                product: _foundProducts[index],
-                                addProduct: _addArticle,
-                              ),
-                            ),
-                          );
-                        },
-                        child: ElevatedCard(product: _foundProducts[index]),
-                      );
-                    },
+                ? ItemList(
+                    addArticle: _addArticle,
+                    foundProducts: _foundProducts,
                   )
                 : const Center(
                     child: Text(
@@ -146,74 +124,6 @@ class _SearchPageState extends State<ShopPage> {
                   ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class ElevatedCard extends StatelessWidget {
-  const ElevatedCard({super.key, required this.product});
-
-  final Product product;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 8,
-      shadowColor: const Color.fromRGBO(184, 216, 223, 1),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: SizedBox(
-        width: 180,
-        height: 180,
-        child: Column(
-          children: <Widget>[
-            const Spacer(
-              flex: 3,
-            ),
-            Center(child: Text(product.picture)),
-            const Spacer(
-              flex: 3,
-            ),
-            Row(
-              children: <Widget>[
-                const Spacer(),
-                Text(product.name),
-                const Spacer(),
-                Text('${product.price} €'),
-                const Spacer()
-              ],
-            ),
-            const Spacer(),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class Detail extends StatelessWidget {
-  const Detail({super.key, required this.product, required this.addProduct});
-
-  final Function addProduct;
-
-  final Product product;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Detail Page'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            addProduct(product);
-            Navigator.pop(context);
-          },
-          child: Text(product.name),
-        ),
       ),
     );
   }
