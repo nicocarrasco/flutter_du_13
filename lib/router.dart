@@ -1,11 +1,28 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_du_13/constants/colors.dart';
 import 'package:flutter_du_13/providers/user_provider.dart';
 import 'package:flutter_du_13/screens/Shop/shop_screen.dart';
 import 'package:flutter_du_13/screens/SignIn/sign_in_screen.dart';
 import 'package:flutter_du_13/screens/SignUp/sign_up_screen.dart';
+import 'package:flutter_du_13/ui/bottom_bar.dart';
 import 'package:go_router/go_router.dart';
+
+CustomTransitionPage buildPageWithDefaultTransition<T>({
+  required BuildContext context,
+  required GoRouterState state,
+  required Widget child,
+}) {
+  return CustomTransitionPage<T>(
+    key: state.pageKey,
+    child: child,
+    transitionsBuilder: (
+      BuildContext context,
+      Animation<double> animation,
+      Animation<double> secondaryAnimation,
+      Widget child,
+    ) =>
+        child,
+  );
+}
 
 class AppRouter {
   AppRouter(this.userProvider);
@@ -14,54 +31,72 @@ class AppRouter {
   late final GoRouter router = GoRouter(
     refreshListenable: userProvider,
     routes: <RouteBase>[
-      GoRoute(
-        name: "Home",
-        path: '/',
-        builder: (BuildContext context, GoRouterState state) =>
-            const ShopPage(),
-        // ElevatedButton(
-        //   onPressed: () async {
-        //     await FirebaseAuth.instance.signOut();
-        //   },
-        //   style: ElevatedButton.styleFrom(
-        //     padding: EdgeInsets.zero,
-        //     shape: RoundedRectangleBorder(
-        //       borderRadius: BorderRadius.circular(15),
-        //     ),
-        //   ),
-        //   child: Ink(
-        //     decoration: BoxDecoration(
-        //       gradient: const LinearGradient(
-        //         end: Alignment(2.5, 2.5),
-        //         colors: <Color>[primaryDarkerColor, primaryLighterColor],
-        //       ),
-        //       borderRadius: BorderRadius.circular(15),
-        //     ),
-        //     child: const SizedBox(
-        //       width: 300,
-        //       child: Padding(
-        //         padding: EdgeInsets.symmetric(vertical: 17),
-        //         child: Text(
-        //           "S'inscrire",
-        //           textAlign: TextAlign.center,
-        //           style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        // ),
+      ShellRoute(
+        builder: (BuildContext context, GoRouterState state, Widget child) {
+          return BottomBar(child: child);
+        },
+        routes: [
+          GoRoute(
+            name: "Home",
+            path: '/',
+            pageBuilder: (BuildContext context, GoRouterState state) =>
+                buildPageWithDefaultTransition<void>(
+              context: context,
+              state: state,
+              child: const SignUpScreen(),
+            ),
+          ),
+          GoRoute(
+            name: "Cart",
+            path: '/cart',
+            pageBuilder: (BuildContext context, GoRouterState state) =>
+                buildPageWithDefaultTransition<void>(
+              context: context,
+              state: state,
+              child: const ShopPage(),
+            ),
+          ),
+          GoRoute(
+            name: "Orders",
+            path: '/orders',
+            pageBuilder: (BuildContext context, GoRouterState state) =>
+                buildPageWithDefaultTransition<void>(
+              context: context,
+              state: state,
+              child: const SignUpScreen(),
+            ),
+          ),
+          GoRoute(
+            name: "Profil",
+            path: '/profil',
+            pageBuilder: (BuildContext context, GoRouterState state) =>
+                buildPageWithDefaultTransition<void>(
+              context: context,
+              state: state,
+              child: const SignUpScreen(),
+            ),
+          ),
+        ],
       ),
       GoRoute(
         name: "SignUp",
         path: '/sign-up',
-        builder: (BuildContext context, GoRouterState state) =>
-            const SignUpScreen(),
+        pageBuilder: (BuildContext context, GoRouterState state) =>
+            buildPageWithDefaultTransition<void>(
+          context: context,
+          state: state,
+          child: const SignUpScreen(),
+        ),
       ),
       GoRoute(
         name: "SignIn",
         path: '/sign-in',
-        builder: (BuildContext context, GoRouterState state) =>
-            const SignInScreen(),
+        pageBuilder: (BuildContext context, GoRouterState state) =>
+            buildPageWithDefaultTransition<void>(
+          context: context,
+          state: state,
+          child: const SignInScreen(),
+        ),
       ),
     ],
 //     errorPageBuilder: (context, state) => MaterialPage<void>(
@@ -72,12 +107,21 @@ class AppRouter {
       final String locPath = state.namedLocation("SignIn");
       final String signUpPath = state.namedLocation("SignUp");
       final String homePath = state.namedLocation("Home");
-      if (!userProvider.isAuthenticated() &&
+      final String cartPath = state.namedLocation("Cart");
+      final String orderPath = state.namedLocation("Orders");
+      final String profilPath = state.namedLocation("Profil");
+      final List<String> authRoutes = userProvider.getRole() == "Acheteur"
+          ? [homePath, cartPath, orderPath, profilPath]
+          : [homePath, cartPath, orderPath, profilPath];
+
+      if ((!userProvider.isAuthenticated() || userProvider.getRole() == null) &&
           state.location != locPath &&
           state.location != signUpPath) {
         return locPath;
       }
-      if (userProvider.isAuthenticated() && state.location != homePath) {
+      if (userProvider.isAuthenticated() &&
+          userProvider.getRole() != null &&
+          !authRoutes.contains(state.location)) {
         return homePath;
       }
       return null;

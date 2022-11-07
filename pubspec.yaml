@@ -43,6 +43,7 @@ dependencies:
   go_router: ^5.0.1
   flutter_svg: ^1.1.5
   cloud_firestore: ^3.5.1
+  curved_navigation_bar: ^1.0.3
 
 dev_dependencies:
   flutter_test:
