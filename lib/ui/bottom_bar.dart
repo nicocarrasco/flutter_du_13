@@ -26,8 +26,8 @@ class _BottomBarState extends State<BottomBar> {
           Provider.of<UserProvider>(context, listen: false).getRole() ==
               "Acheteur";
       final List<String> routes = isBuyer
-          ? ["/", "/cart", "/orders", "/profil"]
-          : ["/", "/cart", "/orders", "/profil"];
+          ? <String>["/", "/cart", "/orders", "/profil"]
+          : <String>["/", "/cart", "/orders", "/profil"];
       context.go(routes[index]);
       _selectedIndex = index;
     });
@@ -39,7 +39,7 @@ class _BottomBarState extends State<BottomBar> {
       body: !kIsWeb
           ? widget.child
           : Row(
-              children: [
+              children: <Widget>[
                 NavigationRail(
                   selectedIndex: _selectedIndex,
                   onDestinationSelected: _onItemTapped,

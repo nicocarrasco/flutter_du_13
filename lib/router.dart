@@ -6,7 +6,7 @@ import 'package:flutter_du_13/screens/SignUp/sign_up_screen.dart';
 import 'package:flutter_du_13/ui/bottom_bar.dart';
 import 'package:go_router/go_router.dart';
 
-CustomTransitionPage buildPageWithDefaultTransition<T>({
+CustomTransitionPage<T> buildPageWithDefaultTransition<T>({
   required BuildContext context,
   required GoRouterState state,
   required Widget child,
@@ -35,7 +35,7 @@ class AppRouter {
         builder: (BuildContext context, GoRouterState state, Widget child) {
           return BottomBar(child: child);
         },
-        routes: [
+        routes: <RouteBase>[
           GoRoute(
             name: "Home",
             path: '/',
@@ -111,8 +111,8 @@ class AppRouter {
       final String orderPath = state.namedLocation("Orders");
       final String profilPath = state.namedLocation("Profil");
       final List<String> authRoutes = userProvider.getRole() == "Acheteur"
-          ? [homePath, cartPath, orderPath, profilPath]
-          : [homePath, cartPath, orderPath, profilPath];
+          ? <String>[homePath, cartPath, orderPath, profilPath]
+          : <String>[homePath, cartPath, orderPath, profilPath];
 
       if ((!userProvider.isAuthenticated() || userProvider.getRole() == null) &&
           state.location != locPath &&

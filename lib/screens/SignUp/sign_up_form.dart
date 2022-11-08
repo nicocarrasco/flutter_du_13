@@ -77,12 +77,12 @@ class _SignUpFormState extends State<SignUpForm> {
               const SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: <Widget>[
                   Container(
                     margin: const EdgeInsets.only(right: 40.0),
                     decoration: _accountType == "Acheteur"
                         ? const BoxDecoration(
-                            boxShadow: [
+                            boxShadow: <BoxShadow>[
                               BoxShadow(
                                 blurRadius: 10.0,
                                 color: primaryColor,
@@ -101,7 +101,7 @@ class _SignUpFormState extends State<SignUpForm> {
                             });
                           },
                           child: Column(
-                            children: [
+                            children: <Widget>[
                               SvgPicture.asset(
                                 "images/seller.svg",
                                 height: 75,
@@ -123,7 +123,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   Container(
                     decoration: _accountType == "Vendeur"
                         ? const BoxDecoration(
-                            boxShadow: [
+                            boxShadow: <BoxShadow>[
                               BoxShadow(
                                 blurRadius: 10.0,
                                 color: primaryColor,
@@ -142,7 +142,7 @@ class _SignUpFormState extends State<SignUpForm> {
                             });
                           },
                           child: Column(
-                            children: [
+                            children: <Widget>[
                               SvgPicture.asset(
                                 "images/seller.svg",
                                 height: 75,

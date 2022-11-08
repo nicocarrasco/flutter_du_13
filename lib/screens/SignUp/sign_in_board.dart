@@ -6,7 +6,7 @@ class SignInBoard extends StatelessWidget {
   const SignInBoard({Key? key}) : super(key: key);
 
   List<Widget> getPictureAndText() {
-    return [
+    return <Widget>[
       SvgPicture.asset("images/login.svg"),
       const SizedBox(width: 40),
       const Text(

@@ -13,9 +13,9 @@ class UserProvider extends ChangeNotifier {
             .doc(_user?.uid)
             .snapshots()
             .listen(
-              (DocumentSnapshot<Map<String, dynamic>> event) => {
+              (DocumentSnapshot<Map<String, dynamic>> event) => <Set<void>>{
                 if (event.data()!["role"] != null)
-                  {_role = event.data()!["role"], notifyListeners()}
+                  <void>{_role = event.data()!["role"], notifyListeners()}
               },
             );
       }
@@ -64,7 +64,7 @@ class UserProvider extends ChangeNotifier {
       await FirebaseFirestore.instance
           .collection('users')
           .doc(newUserCreditential.user?.uid)
-          .set({'role': role});
+          .set(<String, dynamic>{'role': role});
       return "Success";
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {

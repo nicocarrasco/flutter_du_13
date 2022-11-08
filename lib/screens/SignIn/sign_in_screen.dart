@@ -7,7 +7,7 @@ import 'sign_in_form.dart';
 class SignInScreen extends StatelessWidget {
   const SignInScreen({Key? key}) : super(key: key);
 
-  Widget getSignInBoard(context) {
+  Widget getSignInBoard(dynamic context) {
     return Expanded(
       flex: MediaQuery.of(context).size.width > registerBigScreen ? 5 : 3,
       child: Row(

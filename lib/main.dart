@@ -5,6 +5,7 @@ import 'package:flutter_du_13/providers/user_provider.dart';
 import 'package:flutter_du_13/router.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 
 import 'firebase_options.dart';
 
@@ -15,8 +16,8 @@ void main() async {
   );
   runApp(
     MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
+      providers: <SingleChildWidget>[
+        ChangeNotifierProvider<UserProvider>(
           create: (BuildContext context) => UserProvider(),
         ),
       ],
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
     return Consumer<UserProvider>(
       builder: (BuildContext context, UserProvider user, Widget? child) {
         return MultiProvider(
-          providers: [
+          providers: <SingleChildWidget>[
             Provider<AppRouter>(
               create: (BuildContext createContext) => AppRouter(user),
             ),
