@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../home_screen.dart';
 
@@ -23,7 +24,16 @@ class ElevatedCard extends StatelessWidget {
             const Spacer(
               flex: 3,
             ),
-            Center(child: Text(product.picture)),
+            Center(
+              child: Hero(
+                tag: product.name,
+                child: Image.network(
+                  product.picture,
+                  width: 100,
+                  height: 100,
+                ),
+              ),
+            ),
             const Spacer(
               flex: 3,
             ),
@@ -31,12 +41,16 @@ class ElevatedCard extends StatelessWidget {
               children: <Widget>[
                 const Spacer(),
                 Text(product.name),
-                const Spacer(),
+                const Spacer(
+                  flex: 2,
+                ),
                 Text('${product.price} €'),
                 const Spacer()
               ],
             ),
-            const Spacer(),
+            const Spacer(
+              flex: 2,
+            ),
           ],
         ),
       ),
