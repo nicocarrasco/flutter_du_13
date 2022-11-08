@@ -25,7 +25,13 @@ class _SearchPageState extends State<HomePage> {
   final List<Product> _selectedProduct = <Product>[];
 
   final List<Product> _allProduct = <Product>[
-    const Product(id: "1", picture: "test", name: "gun", price: 29),
+    const Product(
+      id: "1",
+      picture:
+          "https://cdn.britannica.com/96/176196-050-EFC5E6A6/Glock-pistol.jpg",
+      name: "gun",
+      price: 29,
+    ),
     const Product(id: "2", picture: "test", name: "spoon", price: 40),
     const Product(id: "3", picture: "test", name: "computer", price: 5),
     const Product(id: "4", picture: "test", name: "bag", price: 35),
