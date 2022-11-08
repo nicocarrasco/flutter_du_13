@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_du_13/constants/colors.dart';
 
 import '../home_screen.dart';
 
@@ -11,7 +12,7 @@ class ElevatedCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 8,
-      shadowColor: const Color.fromRGBO(184, 216, 223, 1),
+      shadowColor: primaryColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
