@@ -28,7 +28,7 @@ class _SearchPageState extends State<HomePage> {
     const Product(
       id: "1",
       picture:
-          "https://cdn.britannica.com/96/176196-050-EFC5E6A6/Glock-pistol.jpg",
+          "test",
       name: "gun",
       price: 29,
     ),

@@ -17,17 +17,83 @@ class BottomBar extends StatefulWidget {
   State<BottomBar> createState() => _BottomBarState();
 }
 
+List<NavigationRailDestination> getWebBuyerBottomBar() {
+    return <NavigationRailDestination>[
+      // navigation destinations
+      const NavigationRailDestination(
+        icon: Icon(Icons.search, size: 30),
+        label: Text(''),
+      ),
+      const NavigationRailDestination(
+        icon: Icon(Icons.shopping_cart_outlined, size: 30),
+        label: Text(''),
+      ),
+      const NavigationRailDestination(
+        icon: Icon(Icons.format_list_bulleted, size: 30),
+        label: Text(''),
+      ),
+      const NavigationRailDestination(
+        icon: Icon(Icons.person, size: 30),
+        label: Text(''),
+      ),
+    ];
+  }
+
+List<NavigationRailDestination> getWebSellerBottomBar() {
+  return <NavigationRailDestination>[
+    // navigation destinations
+    const NavigationRailDestination(
+      icon: Icon(Icons.search, size: 30),
+      label: Text(''),
+    ),
+    const NavigationRailDestination(
+      icon: Icon(Icons.add_circle_outlined, size: 30),
+      label: Text(''),
+    ),
+    const NavigationRailDestination(
+      icon: Icon(Icons.person, size: 30),
+      label: Text(''),
+    ),
+  ];
+}
+
+List<Widget> getMobileBuyerBottomBar() {
+  return <Widget>[
+    const Icon(Icons.search, size: 30),
+    const Icon(Icons.shopping_cart_outlined, size: 30),
+    const Icon(Icons.format_list_bulleted, size: 30),
+    const Icon(Icons.person, size: 30)
+    ];
+}
+
+List<Widget> getMobileSellerBottomBar() {
+  return <Widget>[
+    const Icon(Icons.search, size: 30),
+    const Icon(Icons.add_circle_outlined, size: 30),
+    const Icon(Icons.person, size: 30)
+    ];
+
+}
+
 class _BottomBarState extends State<BottomBar> {
   int _selectedIndex = 0;
+  bool isBuyer = true;
+
+  @override
+  void initState() {
+    super.initState();
+    isBuyer = Provider.of<UserProvider>(context, listen: false).getRole() ==
+              "Acheteur";
+  }
 
   void _onItemTapped(int index) {
     setState(() {
-      final bool isBuyer =
+      isBuyer =
           Provider.of<UserProvider>(context, listen: false).getRole() ==
               "Acheteur";
       final List<String> routes = isBuyer
           ? <String>["/", "/cart", "/orders", "/profil"]
-          : <String>["/", "/cart", "/orders", "/profil"];
+          : <String>["/", "/addProduct", "/profil"];
       context.go(routes[index]);
       _selectedIndex = index;
     });
@@ -45,25 +111,7 @@ class _BottomBarState extends State<BottomBar> {
                   onDestinationSelected: _onItemTapped,
                   labelType: NavigationRailLabelType.selected,
                   backgroundColor: backgroundLighterColor,
-                  destinations: const <NavigationRailDestination>[
-                    // navigation destinations
-                    NavigationRailDestination(
-                      icon: Icon(Icons.search, size: 30),
-                      label: Text(''),
-                    ),
-                    NavigationRailDestination(
-                      icon: Icon(Icons.shopping_cart_outlined, size: 30),
-                      label: Text(''),
-                    ),
-                    NavigationRailDestination(
-                      icon: Icon(Icons.format_list_bulleted, size: 30),
-                      label: Text(''),
-                    ),
-                    NavigationRailDestination(
-                      icon: Icon(Icons.person, size: 30),
-                      label: Text(''),
-                    ),
-                  ],
+                  destinations: isBuyer ? getWebBuyerBottomBar() : getWebSellerBottomBar(),
                   selectedIconTheme: const IconThemeData(color: primaryColor),
                   unselectedIconTheme: const IconThemeData(color: textColor),
                   unselectedLabelTextStyle: const TextStyle(color: textColor),
@@ -77,12 +125,7 @@ class _BottomBarState extends State<BottomBar> {
           ? CurvedNavigationBar(
               backgroundColor: backgroundColor,
               buttonBackgroundColor: primaryColor,
-              items: const <Widget>[
-                Icon(Icons.search, size: 30),
-                Icon(Icons.shopping_cart_outlined, size: 30),
-                Icon(Icons.format_list_bulleted, size: 30),
-                Icon(Icons.person, size: 30),
-              ],
+              items: isBuyer ? getMobileBuyerBottomBar() : getMobileSellerBottomBar(),
               onTap: _onItemTapped,
             )
           : null,

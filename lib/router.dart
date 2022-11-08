@@ -75,6 +75,15 @@ class AppRouter {
               state: state,
               child: const SignUpScreen(),
             ),
+          ),GoRoute(
+            name: "AddProduct",
+            path: '/addproduct',
+            pageBuilder: (BuildContext context, GoRouterState state) =>
+                buildPageWithDefaultTransition<void>(
+              context: context,
+              state: state,
+              child: const SignUpScreen(),
+            ),
           ),
         ],
       ),
@@ -106,13 +115,17 @@ class AppRouter {
     redirect: (BuildContext context, GoRouterState state) {
       final String locPath = state.namedLocation("SignIn");
       final String signUpPath = state.namedLocation("SignUp");
+
       final String homePath = state.namedLocation("Home");
       final String cartPath = state.namedLocation("Cart");
       final String orderPath = state.namedLocation("Orders");
       final String profilPath = state.namedLocation("Profil");
+
+      final String addProduct = state.namedLocation("AddProduct");
+
       final List<String> authRoutes = userProvider.getRole() == "Acheteur"
           ? <String>[homePath, cartPath, orderPath, profilPath]
-          : <String>[homePath, cartPath, orderPath, profilPath];
+          : <String>[homePath, addProduct, profilPath];
 
       if ((!userProvider.isAuthenticated() || userProvider.getRole() == null) &&
           state.location != locPath &&
