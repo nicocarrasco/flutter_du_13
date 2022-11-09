@@ -61,7 +61,7 @@ class _CartPage extends State<Cart> {
                         ) =>
                             Dismissible(
                           direction: DismissDirection.endToStart,
-                          key: Key(selectedProduct[index].id),
+                          key: UniqueKey(),
                           onDismissed: (DismissDirection direction) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
