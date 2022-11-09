@@ -60,6 +60,7 @@ class _CartPage extends State<Cart> {
                       ),
                       itemBuilder: (BuildContext context, int index) {
                         return Dismissible(
+                          direction: DismissDirection.endToStart,
                           key: Key(selectedProduct[index].id),
                           onDismissed: (DismissDirection direction) {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -74,7 +75,18 @@ class _CartPage extends State<Cart> {
                             });
                           },
                           // Show a red background as the item is swiped away.
-                          background: Container(color: Colors.red),
+                          background: Container(
+                            alignment: AlignmentDirectional.centerEnd,
+                            color: Colors.red,
+                            child: const Padding(
+                              padding: EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
+                              child: Icon(
+                                size: 55,
+                                Icons.delete,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
                           child: Card(
                             elevation: 8,
                             shadowColor: primaryColor,
