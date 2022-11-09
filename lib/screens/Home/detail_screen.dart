@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_du_13/screens/Home/home_screen.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/produit_provider.dart';
 
 class Detail extends StatelessWidget {
-  const Detail({super.key, required this.product, required this.addProduct});
-
-  final Function addProduct;
+  const Detail({super.key, required this.product});
 
   final Product product;
 
@@ -60,12 +60,19 @@ class Detail extends StatelessWidget {
                     ),
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    addProduct(product);
-                    Navigator.pop(context);
-                  },
-                  child: const Text('Buy'),
+                Consumer<ProduitProvider>(
+                  builder: (
+                    BuildContext context,
+                    ProduitProvider productProv,
+                    Widget? child,
+                  ) =>
+                      ElevatedButton(
+                    onPressed: () {
+                      productProv.addProduct(product);
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Buy'),
+                  ),
                 ),
               ],
             ),

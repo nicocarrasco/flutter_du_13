@@ -1,18 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../providers/produit_provider.dart';
 import 'ItemList/items_component.dart';
-
-class Product {
-  const Product({
-    required this.id,
-    required this.picture,
-    required this.name,
-    required this.price,
-  });
-  final String id;
-  final String picture;
-  final String name;
-  final int price;
-}
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -22,7 +11,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<HomePage> {
-  final List<Product> _selectedProduct = <Product>[];
+  List<Product> _foundProducts = <Product>[];
 
   final List<Product> _allProduct = <Product>[
     const Product(
@@ -43,17 +32,10 @@ class _SearchPageState extends State<HomePage> {
     const Product(id: "10", picture: "test", name: "pant", price: 32),
   ];
 
-  List<Product> _foundProducts = <Product>[];
-
   @override
   void initState() {
     _foundProducts = _allProduct;
     super.initState();
-  }
-
-  void _addArticle(Product product) {
-    _selectedProduct.add(product);
-    setState(() {});
   }
 
   void _runFilter(String enteredKeyword) {
@@ -111,15 +93,9 @@ class _SearchPageState extends State<HomePage> {
               ),
             ),
           ),
-          Text(
-            _selectedProduct.isNotEmpty
-                ? '${_selectedProduct.map((Product e) => e.price).reduce((int value, int element) => value + element)} €'
-                : '0€',
-          ),
           Expanded(
             child: _foundProducts.isNotEmpty
                 ? ItemList(
-                    addArticle: _addArticle,
                     foundProducts: _foundProducts,
                   )
                 : const Center(

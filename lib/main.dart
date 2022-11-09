@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_du_13/constants/colors.dart';
+import 'package:flutter_du_13/providers/produit_provider.dart';
 import 'package:flutter_du_13/providers/user_provider.dart';
 import 'package:flutter_du_13/router.dart';
 import 'package:go_router/go_router.dart';
@@ -19,6 +20,9 @@ void main() async {
       providers: <SingleChildWidget>[
         ChangeNotifierProvider<UserProvider>(
           create: (BuildContext context) => UserProvider(),
+        ),
+        ChangeNotifierProvider<ProduitProvider>(
+          create: (BuildContext context) => ProduitProvider(),
         ),
       ],
       child: const MyApp(),

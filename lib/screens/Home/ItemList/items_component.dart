@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 
+import '../../../providers/produit_provider.dart';
 import '../Card/card_component.dart';
 import '../detail_screen.dart';
-import '../home_screen.dart';
 
 class ItemList extends StatelessWidget {
   const ItemList({
     super.key,
     required this.foundProducts,
-    required this.addArticle,
   });
 
   final List<Product> foundProducts;
-  final Function addArticle;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +30,6 @@ class ItemList extends StatelessWidget {
               MaterialPageRoute<Widget>(
                 builder: (BuildContext context) => Detail(
                   product: foundProducts[index],
-                  addProduct: addArticle,
                 ),
               ),
             );
