@@ -1,18 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_du_13/providers/product_provider.dart';
 import 'ItemList/items_component.dart';
 
-class Product {
-  const Product({
-    required this.id,
-    required this.picture,
-    required this.name,
-    required this.price,
-  });
-  final String id;
-  final String picture;
-  final String name;
-  final int price;
-}
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

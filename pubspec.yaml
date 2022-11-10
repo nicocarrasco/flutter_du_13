@@ -44,6 +44,7 @@ dependencies:
   flutter_svg: ^1.1.5
   cloud_firestore: ^3.5.1
   curved_navigation_bar: ^1.0.3
+  multi_image_picker2: ^5.0.2
 
 dev_dependencies:
   flutter_test:
