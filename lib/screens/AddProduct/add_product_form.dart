@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_du_13/constants/colors.dart';
 import 'package:flutter_du_13/screens/AddProduct/ImagePicker/image_picker.dart';
-import 'package:flutter_du_13/providers/user_provider.dart';
+import 'package:flutter_du_13/providers/product_provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:multi_image_picker2/multi_image_picker2.dart';
 
 class AddProductForm extends StatefulWidget {
   const AddProductForm({
@@ -20,6 +21,45 @@ class _AddProductFormState extends State<AddProductForm> {
   final TextEditingController _productNameController = TextEditingController();
   final TextEditingController _productDescriptionController = TextEditingController();
   final TextEditingController _productPriceController = TextEditingController();
+  List<Asset> _images = <Asset>[];
+
+  void _manageStateForChildWidget(List<Asset> newValue) {
+    setState(() {
+      if (newValue.isNotEmpty) {
+        Fluttertoast.showToast(
+          msg: newValue[0].name!,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: errorColor,
+          webBgColor: "#FF6666",
+          webShowClose: true,
+          webPosition: "center",
+          textColor: backgroundLighterColor,
+          fontSize: 16.0,
+          timeInSecForIosWeb: 2,
+        );
+      }
+      _images = newValue;
+    });
+  }
+
+  Widget buildGridView() {
+    return GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        mainAxisSpacing: 30,
+        crossAxisSpacing: 24,
+        childAspectRatio: 0.75,
+      ),
+      itemBuilder: (BuildContext context, int index) =>
+      AssetThumb(
+          asset: _images[index],
+          width: 150,
+          height: 150,
+      ),
+      itemCount: _images.length,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +87,15 @@ class _AddProductFormState extends State<AddProductForm> {
             ),
           ),
           const SizedBox(height: 51),
-          const MultipleImagePicker(),
+          MultipleImagePicker(notifyParent: _manageStateForChildWidget, images: _images,),
+          const SizedBox(height: 20),
+          SizedBox(
+            height: _images.isNotEmpty ? 150 : 0,
+            width: _images.isNotEmpty ?  MediaQuery.of(context).size.width : 0,
+            child: Expanded(
+              child:  buildGridView(),
+            )
+          ),
           const SizedBox(height: 40),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -139,29 +187,31 @@ class _AddProductFormState extends State<AddProductForm> {
           ),
           ElevatedButton(
             onPressed: () async {
-              // if (_formKey.currentState!.validate()) {
-              //   final String message =
-              //       await Provider.of<UserProvider>(context, listen: false)
-              //           .signIn(
-              //     emailAddress: _emailController.text,
-              //     password: _passwordController.text,
-              //   );
-
-              //   if (message != "Success") {
-              //     await Fluttertoast.showToast(
-              //       msg: message,
-              //       toastLength: Toast.LENGTH_SHORT,
-              //       gravity: ToastGravity.BOTTOM,
-              //       backgroundColor: errorColor,
-              //       webBgColor: "#FF6666",
-              //       webShowClose: true,
-              //       webPosition: "center",
-              //       textColor: backgroundLighterColor,
-              //       fontSize: 16.0,
-              //       timeInSecForIosWeb: 2,
-              //     );
-              //   }
-              // }
+              if (_formKey.currentState!.validate()) {
+                final String message =
+                    await ProductProvider()
+                      .addProduct(
+                        product: Product(
+                          picture: "test",
+                          name: _productNameController.text,
+                          price: int.parse(_productPriceController.text),
+                        ),
+                      );
+                if (message != "Success") {
+                  await Fluttertoast.showToast(
+                    msg: message,
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    backgroundColor: errorColor,
+                    webBgColor: "#FF6666",
+                    webShowClose: true,
+                    webPosition: "center",
+                    textColor: backgroundLighterColor,
+                    fontSize: 16.0,
+                    timeInSecForIosWeb: 2,
+                  );
+                }
+              }
             },
             style: ElevatedButton.styleFrom(
               padding: EdgeInsets.zero,

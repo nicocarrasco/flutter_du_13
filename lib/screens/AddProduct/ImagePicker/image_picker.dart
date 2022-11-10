@@ -2,39 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_du_13/constants/colors.dart';
 import 'package:multi_image_picker2/multi_image_picker2.dart';
 
-class MultipleImagePicker extends StatefulWidget {
-  const MultipleImagePicker({super.key});
+class MultipleImagePicker extends StatelessWidget {
+  MultipleImagePicker({super.key, required this.notifyParent, required this.images});
 
-  @override
-  State<MultipleImagePicker> createState() => _MultipleImagePickerState();
-}
-
-class _MultipleImagePickerState extends State<MultipleImagePicker> {
+  final ValueChanged<List<Asset>> notifyParent;
   List<Asset> images = <Asset>[];
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-
-  Widget buildGridView() {
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        mainAxisSpacing: 30,
-        crossAxisSpacing: 24,
-        childAspectRatio: 0.75,
-      ),
-      itemBuilder: (BuildContext context, int index) =>
-      AssetThumb(
-          asset: images[index],
-          width: 150,
-          height: 150,
-      ),
-      itemCount: images.length,
-    );
-  }
 
   Future<void> loadAssets() async {
     List<Asset> resultList = <Asset>[];
@@ -54,16 +26,12 @@ class _MultipleImagePickerState extends State<MultipleImagePicker> {
           selectCircleStrokeColor: "#000000",
         ),
       );
+      notifyParent(resultList);
     // ignore: empty_catches
     } on Exception {
     }
-
-    if (!mounted) return;
-
-    setState(() {
-      images = resultList;
-    });
   }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -97,14 +65,6 @@ class _MultipleImagePickerState extends State<MultipleImagePicker> {
               ),
             ),
         ),
-        const SizedBox(height: 20),
-        SizedBox(
-          height: images.isNotEmpty ? 150 : 0,
-          width: images.isNotEmpty ?  MediaQuery.of(context).size.width : 0,
-          child: Expanded(
-            child:  buildGridView(),
-        ),
-        )
       ],
     );
   }
