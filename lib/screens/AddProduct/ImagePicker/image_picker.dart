@@ -1,34 +1,28 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_du_13/constants/colors.dart';
-import 'package:multi_image_picker2/multi_image_picker2.dart';
+import 'package:image_picker/image_picker.dart';
 
 class MultipleImagePicker extends StatelessWidget {
-  MultipleImagePicker({super.key, required this.notifyParent, required this.images});
 
-  final ValueChanged<List<Asset>> notifyParent;
-  List<Asset> images = <Asset>[];
+  MultipleImagePicker({super.key, required this.notifyParent});
 
-  Future<void> loadAssets() async {
-    List<Asset> resultList = <Asset>[];
-    try {
-      resultList = await MultiImagePicker.pickImages(
-        maxImages: 3,
-        enableCamera: true,
-        selectedAssets: images,
-        cupertinoOptions: const CupertinoOptions(
-        takePhotoIcon: "photo_camera",
-        doneButtonTitle: "Fini",),
-        materialOptions: const MaterialOptions(
-          actionBarColor: "#FF72B2D5",
-          actionBarTitle: "Vos photos",
-          allViewTitle: "Toutes les photos",
-          useDetailsView: false,
-          selectCircleStrokeColor: "#000000",
-        ),
-      );
-      notifyParent(resultList);
-    // ignore: empty_catches
-    } on Exception {
+  final ValueChanged<List<XFile>> notifyParent;
+
+  final ImagePicker imgpicker = ImagePicker();
+
+
+
+  Future<void> pickImage() async {
+    final List<XFile> pickedfiles = await imgpicker.pickMultiImage();
+    notifyParent(pickedfiles);
+  }
+
+  Future<void> takePicture() async {
+    final XFile? photo = await imgpicker.pickImage(source: ImageSource.camera);
+    if (photo != null) {
+      final List<XFile> pickedfiles = <XFile>[photo];
+      notifyParent(pickedfiles);
     }
   }
 
@@ -37,33 +31,36 @@ class MultipleImagePicker extends StatelessWidget {
     return Column(
       mainAxisAlignment:MainAxisAlignment.center,
       children: <Widget>[
-        ElevatedButton(
-          onPressed: loadAssets,
+        ElevatedButton.icon(
+          onPressed: takePicture,
+          icon: const Icon(
+            Icons.photo_camera,
+            color: Colors.white,
+            size: 30.0,
+          ),
           style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.zero,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-            ),
-            child: Ink(
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  end: Alignment(2.5, 2.5),
-                  colors: <Color>[primaryDarkerColor, primaryLighterColor],
-                ),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: const SizedBox(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 17, horizontal: 17),
-                  child: Text(
-                    'Ajouter des photos',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 14),
-                  ),
-                ),
-              ),
-            ),
+           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 17),
+           shape: RoundedRectangleBorder(
+             borderRadius: BorderRadius.circular(15),
+           ),
+         ),
+          label: const Text("Prendre une photo"),
+        ),
+        const SizedBox(height: 20,),
+        ElevatedButton.icon(
+          onPressed: pickImage,
+          icon: const Icon(
+            Icons.image,
+            color: Colors.white,
+            size: 30.0,
+          ),
+          style: ElevatedButton.styleFrom(
+           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 17),
+           shape: RoundedRectangleBorder(
+             borderRadius: BorderRadius.circular(15),
+           ),
+         ),
+          label: const Text("Ajouter depuis la gallerie"),
         ),
       ],
     );

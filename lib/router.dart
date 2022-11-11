@@ -44,7 +44,7 @@ class AppRouter {
                 buildPageWithDefaultTransition<void>(
               context: context,
               state: state,
-              child: const HomePage(),
+              child: const SignUpScreen(),
             ),
           ),
           GoRoute(

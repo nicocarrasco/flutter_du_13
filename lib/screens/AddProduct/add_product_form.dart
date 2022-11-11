@@ -1,11 +1,12 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_du_13/constants/colors.dart';
+import 'package:flutter_du_13/firebase/product.dart';
 import 'package:flutter_du_13/screens/AddProduct/ImagePicker/image_picker.dart';
-import 'package:flutter_du_13/providers/product_provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
-import 'package:multi_image_picker2/multi_image_picker2.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddProductForm extends StatefulWidget {
   const AddProductForm({
@@ -21,25 +22,25 @@ class _AddProductFormState extends State<AddProductForm> {
   final TextEditingController _productNameController = TextEditingController();
   final TextEditingController _productDescriptionController = TextEditingController();
   final TextEditingController _productPriceController = TextEditingController();
-  List<Asset> _images = <Asset>[];
+  List<XFile> _imagefiles = <XFile>[];
 
-  void _manageStateForChildWidget(List<Asset> newValue) {
+  void _manageStateForChildWidget(List<XFile> newValue) {
     setState(() {
-      if (newValue.isNotEmpty) {
-        Fluttertoast.showToast(
-          msg: newValue[0].name!,
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: errorColor,
-          webBgColor: "#FF6666",
-          webShowClose: true,
-          webPosition: "center",
-          textColor: backgroundLighterColor,
-          fontSize: 16.0,
-          timeInSecForIosWeb: 2,
-        );
-      }
-      _images = newValue;
+      // if (newValue.isNotEmpty) {
+      //   Fluttertoast.showToast(
+      //     msg: newValue[0].path,
+      //     toastLength: Toast.LENGTH_SHORT,
+      //     gravity: ToastGravity.BOTTOM,
+      //     backgroundColor: errorColor,
+      //     webBgColor: "#FF6666",
+      //     webShowClose: true,
+      //     webPosition: "center",
+      //     textColor: backgroundLighterColor,
+      //     fontSize: 16.0,
+      //     timeInSecForIosWeb: 2,
+      //   );
+      // }
+      _imagefiles = newValue;
     });
   }
 
@@ -52,12 +53,8 @@ class _AddProductFormState extends State<AddProductForm> {
         childAspectRatio: 0.75,
       ),
       itemBuilder: (BuildContext context, int index) =>
-      AssetThumb(
-          asset: _images[index],
-          width: 150,
-          height: 150,
-      ),
-      itemCount: _images.length,
+      kIsWeb? Image.network(_imagefiles[index].path) : Image.file(File(_imagefiles[index].path)),
+      itemCount: _imagefiles.length,
     );
   }
 
@@ -87,20 +84,19 @@ class _AddProductFormState extends State<AddProductForm> {
             ),
           ),
           const SizedBox(height: 51),
-          MultipleImagePicker(notifyParent: _manageStateForChildWidget, images: _images,),
+          MultipleImagePicker(notifyParent: _manageStateForChildWidget,),
           const SizedBox(height: 20),
           SizedBox(
-            height: _images.isNotEmpty ? 150 : 0,
-            width: _images.isNotEmpty ?  MediaQuery.of(context).size.width : 0,
+            height: _imagefiles.isNotEmpty ? 150 : 0,
+            width: _imagefiles.isNotEmpty ?  MediaQuery.of(context).size.width : 0,
             child: Expanded(
               child:  buildGridView(),
-            )
+            ),
           ),
           const SizedBox(height: 40),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-
               const Text(
                 style: TextStyle(
                   fontSize: 15,
@@ -196,6 +192,7 @@ class _AddProductFormState extends State<AddProductForm> {
                           name: _productNameController.text,
                           price: int.parse(_productPriceController.text),
                         ),
+                        images: _imagefiles,
                       );
                 if (message != "Success") {
                   await Fluttertoast.showToast(

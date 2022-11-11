@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_du_13/providers/product_provider.dart';
+import 'package:flutter_du_13/firebase/product.dart';
 import 'ItemList/items_component.dart';
 
 
