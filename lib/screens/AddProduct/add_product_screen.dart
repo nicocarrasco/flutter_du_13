@@ -9,7 +9,6 @@ class AddProductScreen extends StatelessWidget {
   List<Widget> getAddProductScreen(BuildContext context) {
     return <Widget>[
       Expanded(
-        flex: MediaQuery.of(context).size.width > registerBigScreen ? 5 : 7,
         child: SingleChildScrollView(
           child: Row(
             children: <Widget>[

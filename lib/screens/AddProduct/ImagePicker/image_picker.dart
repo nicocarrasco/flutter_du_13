@@ -1,28 +1,29 @@
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_du_13/constants/colors.dart';
 import 'package:image_picker/image_picker.dart';
 
 class MultipleImagePicker extends StatelessWidget {
 
   MultipleImagePicker({super.key, required this.notifyParent});
 
-  final ValueChanged<List<XFile>> notifyParent;
+  final ValueChanged<XFile> notifyParent;
 
   final ImagePicker imgpicker = ImagePicker();
 
 
 
   Future<void> pickImage() async {
-    final List<XFile> pickedfiles = await imgpicker.pickMultiImage();
-    notifyParent(pickedfiles);
+    final XFile? image = await imgpicker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      notifyParent(image);
+    }
   }
 
   Future<void> takePicture() async {
     final XFile? photo = await imgpicker.pickImage(source: ImageSource.camera);
     if (photo != null) {
-      final List<XFile> pickedfiles = <XFile>[photo];
-      notifyParent(pickedfiles);
+      notifyParent(photo);
     }
   }
 
@@ -31,6 +32,7 @@ class MultipleImagePicker extends StatelessWidget {
     return Column(
       mainAxisAlignment:MainAxisAlignment.center,
       children: <Widget>[
+        if (!kIsWeb)
         ElevatedButton.icon(
           onPressed: takePicture,
           icon: const Icon(
@@ -39,13 +41,14 @@ class MultipleImagePicker extends StatelessWidget {
             size: 30.0,
           ),
           style: ElevatedButton.styleFrom(
-           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 17),
-           shape: RoundedRectangleBorder(
-             borderRadius: BorderRadius.circular(15),
-           ),
-         ),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 17),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+          ),
           label: const Text("Prendre une photo"),
         ),
+        if (!kIsWeb)
         const SizedBox(height: 20,),
         ElevatedButton.icon(
           onPressed: pickImage,

@@ -22,40 +22,12 @@ class _AddProductFormState extends State<AddProductForm> {
   final TextEditingController _productNameController = TextEditingController();
   final TextEditingController _productDescriptionController = TextEditingController();
   final TextEditingController _productPriceController = TextEditingController();
-  List<XFile> _imagefiles = <XFile>[];
+  XFile? _imagefile;
 
-  void _manageStateForChildWidget(List<XFile> newValue) {
+  void _manageStateForChildWidget(XFile newValue) {
     setState(() {
-      // if (newValue.isNotEmpty) {
-      //   Fluttertoast.showToast(
-      //     msg: newValue[0].path,
-      //     toastLength: Toast.LENGTH_SHORT,
-      //     gravity: ToastGravity.BOTTOM,
-      //     backgroundColor: errorColor,
-      //     webBgColor: "#FF6666",
-      //     webShowClose: true,
-      //     webPosition: "center",
-      //     textColor: backgroundLighterColor,
-      //     fontSize: 16.0,
-      //     timeInSecForIosWeb: 2,
-      //   );
-      // }
-      _imagefiles = newValue;
+      _imagefile = newValue;
     });
-  }
-
-  Widget buildGridView() {
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        mainAxisSpacing: 30,
-        crossAxisSpacing: 24,
-        childAspectRatio: 0.75,
-      ),
-      itemBuilder: (BuildContext context, int index) =>
-      kIsWeb? Image.network(_imagefiles[index].path) : Image.file(File(_imagefiles[index].path)),
-      itemCount: _imagefiles.length,
-    );
   }
 
   @override
@@ -86,11 +58,11 @@ class _AddProductFormState extends State<AddProductForm> {
           const SizedBox(height: 51),
           MultipleImagePicker(notifyParent: _manageStateForChildWidget,),
           const SizedBox(height: 20),
+          if (_imagefile != null)
           SizedBox(
-            height: _imagefiles.isNotEmpty ? 150 : 0,
-            width: _imagefiles.isNotEmpty ?  MediaQuery.of(context).size.width : 0,
+            height: 200,
             child: Expanded(
-              child:  buildGridView(),
+              child: kIsWeb? Image.network(_imagefile!.path) : Image.file(File(_imagefile!.path)),
             ),
           ),
           const SizedBox(height: 40),
@@ -192,8 +164,14 @@ class _AddProductFormState extends State<AddProductForm> {
                           name: _productNameController.text,
                           price: int.parse(_productPriceController.text),
                         ),
-                        images: _imagefiles,
+                        image: _imagefile,
                       );
+
+                await Fluttertoast.showToast(
+                    msg: "test",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    backgroundColor: errorColor,);
                 if (message != "Success") {
                   await Fluttertoast.showToast(
                     msg: message,
