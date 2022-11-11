@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import 'package:flutter_du_13/firebase/product.dart';
-
 
 class Detail extends StatelessWidget {
   const Detail({super.key, required this.product});
