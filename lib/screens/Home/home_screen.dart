@@ -19,17 +19,18 @@ class _SearchPageState extends State<HomePage> {
       picture:
           "test",
       name: "gun",
+      description: "",
       price: 29,
     ),
-    const Product(picture: "test", name: "spoon", price: 40),
-    const Product(picture: "test", name: "computer", price: 5),
-    const Product(picture: "test", name: "bag", price: 35),
-    const Product(picture: "test", name: "phone", price: 21),
-    const Product(picture: "test", name: "phone case", price: 55),
-    const Product(picture: "test", name: "chair", price: 30),
-    const Product(picture: "test", name: "desk", price: 14),
-    const Product(picture: "test", name: "pullovers", price: 100),
-    const Product(picture: "test", name: "pant", price: 32),
+    const Product(picture: "test", description: "", name: "spoon", price: 40),
+    const Product(picture: "test", description: "", name: "computer", price: 5),
+    const Product(picture: "test", description: "", name: "bag", price: 35),
+    const Product(picture: "test", description: "", name: "phone", price: 21),
+    const Product(picture: "test", description: "", name: "phone case", price: 55),
+    const Product(picture: "test", description: "", name: "chair", price: 30),
+    const Product(picture: "test", description: "", name: "desk", price: 14),
+    const Product(picture: "test", description: "", name: "pullovers", price: 100),
+    const Product(picture: "test", description: "", name: "pant", price: 32),
   ];
 
   @override

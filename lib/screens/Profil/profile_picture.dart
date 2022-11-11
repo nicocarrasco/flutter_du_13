@@ -18,7 +18,6 @@ class _ProfilPictureState extends State<ProfilPicture> {
   final UserProvider model = UserProvider();
   bool _isLoading = false;
 
-  @override
   void _listener() async {
     final String picture =
         await Provider.of<UserProvider>(context, listen: false).getPicture();
@@ -39,7 +38,7 @@ class _ProfilPictureState extends State<ProfilPicture> {
     });
   }
 
-  _asyncMethod() async {
+  void _asyncMethod() async {
     final String picture =
         await Provider.of<UserProvider>(context, listen: false).getPicture();
     setState(() {
@@ -53,6 +52,7 @@ class _ProfilPictureState extends State<ProfilPicture> {
       setState(() {
         _isLoading = true;
       });
+      if (!mounted) return;
       final String message = await Provider.of<UserProvider>(
         context,
         listen: false,
@@ -84,7 +84,7 @@ class _ProfilPictureState extends State<ProfilPicture> {
   Widget build(BuildContext context) {
     return Center(
       child: Column(
-        children: [
+        children: <Widget> [
           if (_isLoading)
             Container(
               margin: const EdgeInsets.all(20),

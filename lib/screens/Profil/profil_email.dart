@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_du_13/constants/colors.dart';
 import 'package:flutter_du_13/providers/user_provider.dart';
-import 'package:flutter_du_13/utils/validateEmail.dart';
+import 'package:flutter_du_13/utils/validate_email.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
@@ -89,6 +89,7 @@ class _ProfilEmailState extends State<ProfilEmail> {
                       timeInSecForIosWeb: 2,
                     );
                     if (!isError) {
+                      if (!mounted) return;
                       Navigator.pop(
                         context,
                       );
