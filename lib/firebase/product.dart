@@ -1,5 +1,3 @@
-import 'dart:developer' as developer;
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -14,22 +12,26 @@ class Product {
     required this.picture,
     required this.name,
     required this.price,
+    required this.description,
   });
 
   Product.fromMap(Map<String, dynamic> snapshot)
       : price = snapshot['price'] ?? '',
         name = snapshot['name'] ?? '',
-        picture = snapshot['picture'] ?? '';
+        picture = snapshot['picture'] ?? '',
+        description = snapshot['description'] ?? '';
 
   final String picture;
   final String name;
   final int price;
+  final String description;
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       "name": name,
       "price": price,
       "picture": picture,
+      "description": description,
       "userId": ""
     };
   }

@@ -12,8 +12,6 @@ class ProfilPage extends StatefulWidget {
 }
 
 class _SearchProfilState extends State<ProfilPage> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +22,7 @@ class _SearchProfilState extends State<ProfilPage> {
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: <Widget> [
                 const ProfilPicture(),
                 const Divider(
                   height: 20,

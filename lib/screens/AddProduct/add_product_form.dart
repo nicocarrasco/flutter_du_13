@@ -75,7 +75,7 @@ class _AddProductFormState extends State<AddProductForm> {
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
                 ),
-                "Nom du produit",
+                "Nom",
               ),
               const SizedBox(height: 18),
               TextFormField(
@@ -83,7 +83,7 @@ class _AddProductFormState extends State<AddProductForm> {
                 keyboardType: TextInputType.text,
                 cursorColor: primaryColor,
                 decoration: const InputDecoration(
-                  hintText: "Lampe",
+                  hintText: "Nom du produit",
                   // prefixIcon: Icon(Icons.alternate_email, size: 14),
                 ),
                 validator: (String? value) {
@@ -113,7 +113,7 @@ class _AddProductFormState extends State<AddProductForm> {
                 minLines: 2,
                 maxLines: 4,
                 decoration: const InputDecoration(
-                  hintText: "Description de la lampte",
+                  hintText: "Description du produit",
                   // prefixIcon: Icon(Icons.lock, size: 14),
                 ),
                 validator: (String? value) {
@@ -141,7 +141,7 @@ class _AddProductFormState extends State<AddProductForm> {
                 controller: _productPriceController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
-                  hintText: "10",
+                  hintText: "Prix du produit",
                   // prefixIcon: Icon(Icons.lock, size: 14),
                 ),
                 inputFormatters: <TextInputFormatter>[
@@ -180,6 +180,7 @@ class _AddProductFormState extends State<AddProductForm> {
                         product: Product(
                           picture: "",
                           name: _productNameController.text,
+                          description: _productDescriptionController.text,
                           price: int.parse(_productPriceController.text),
                         ),
                         image: _imagefile,
