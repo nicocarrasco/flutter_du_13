@@ -6,6 +6,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../../animation/bouncing_logo.dart';
+
 class SignUpForm extends StatefulWidget {
   const SignUpForm({
     Key? key,
@@ -28,28 +30,9 @@ class _SignUpFormState extends State<SignUpForm> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           const SizedBox(height: 30),
-          RichText(
-            text: const TextSpan(
-              style: TextStyle(
-                fontFamily: "Poppins",
-                fontSize: 40,
-                fontWeight: FontWeight.bold,
-              ),
-              children: <InlineSpan>[
-                TextSpan(
-                  text: 'Flut',
-                  style: TextStyle(
-                    color: textColor,
-                  ),
-                ),
-                TextSpan(
-                  text: 'Treize',
-                  style: TextStyle(
-                    color: primaryColor,
-                  ),
-                ),
-              ],
-            ),
+          const SizedBox(
+            height: 70,
+            child: BouncingLogo(),
           ),
           const SizedBox(height: 20),
           const Align(

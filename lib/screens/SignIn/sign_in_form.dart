@@ -5,6 +5,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../../animation/bouncing_logo.dart';
+
 class SignInForm extends StatefulWidget {
   const SignInForm({
     Key? key,
@@ -26,28 +28,9 @@ class _SignInFormState extends State<SignInForm> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           const SizedBox(height: 40),
-          RichText(
-            text: const TextSpan(
-              style: TextStyle(
-                fontFamily: "Poppins",
-                fontSize: 40,
-                fontWeight: FontWeight.bold,
-              ),
-              children: <InlineSpan>[
-                TextSpan(
-                  text: 'Flut',
-                  style: TextStyle(
-                    color: textColor,
-                  ),
-                ),
-                TextSpan(
-                  text: 'Treize',
-                  style: TextStyle(
-                    color: primaryColor,
-                  ),
-                ),
-              ],
-            ),
+          const SizedBox(
+            height: 70,
+            child: BouncingLogo(),
           ),
           const SizedBox(height: 51),
           const Align(
