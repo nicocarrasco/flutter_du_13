@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import "package:flutter/material.dart";
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 
 class UserProvider extends ChangeNotifier {
   UserProvider() {
@@ -40,6 +43,16 @@ class UserProvider extends ChangeNotifier {
       return _user!.displayName!;
     }
     return "";
+  }
+
+  Future<String> getPicture() async {
+    if (isAuthenticated() && _user!.photoURL != null) {
+      final FirebaseStorage storage = FirebaseStorage.instance;
+      final Reference ref = storage.ref().child(_user!.photoURL!);
+      final String picture = await ref.getDownloadURL();
+      return picture;
+    }
+    return "https://picsum.photos/250?image=11";
   }
 
   String getEmailAdress() {
@@ -95,6 +108,26 @@ class UserProvider extends ChangeNotifier {
     } on PlatformException catch (e) {
       if (e.code == 'EMAIL_EXISTS') {
         return "Email déjà utilisé";
+      }
+    }
+    return "Une erreur est survenue";
+  }
+
+  Future<String> updatePicture({
+    required XFile picture,
+  }) async {
+    try {
+      final TaskSnapshot url = await FirebaseStorage.instance
+          .ref('images/')
+          .child('${DateTime.now().toIso8601String()}-${picture.name}')
+          .putData(
+            await picture.readAsBytes(),
+          );
+      await _user!.updatePhotoURL(url.ref.fullPath);
+      return "L'image de profil a été mise à jour";
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        return "L'utilisateur n'existe pas";
       }
     }
     return "Une erreur est survenue";
