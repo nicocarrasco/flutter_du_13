@@ -44,7 +44,7 @@ class AppRouter {
                 buildPageWithDefaultTransition<void>(
               context: context,
               state: state,
-              child: const SignUpScreen(),
+              child: const HomePage(),
             ),
           ),
           GoRoute(
@@ -54,7 +54,7 @@ class AppRouter {
                 buildPageWithDefaultTransition<void>(
               context: context,
               state: state,
-              child: const Cart(),
+              child: const HomePage(),
             ),
           ),
           GoRoute(
