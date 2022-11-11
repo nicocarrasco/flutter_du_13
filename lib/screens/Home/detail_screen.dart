@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../providers/produit_provider.dart';
+import 'package:flutter_du_13/firebase/product.dart';
+
 
 class Detail extends StatelessWidget {
   const Detail({super.key, required this.product});
@@ -60,20 +61,20 @@ class Detail extends StatelessWidget {
                     ),
                   ),
                 ),
-                Consumer<ProduitProvider>(
-                  builder: (
-                    BuildContext context,
-                    ProduitProvider productProv,
-                    Widget? child,
-                  ) =>
-                      ElevatedButton(
-                    onPressed: () {
-                      productProv.addProduct(product);
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Buy'),
-                  ),
-                ),
+                // Consumer<ProduitProvider>(
+                //   builder: (
+                //     BuildContext context,
+                //     ProduitProvider productProv,
+                //     Widget? child,
+                //   ) =>
+                //       ElevatedButton(
+                //     onPressed: () {
+                //       productProv.addProduct(product);
+                //       Navigator.pop(context);
+                //     },
+                //     child: const Text('Buy'),
+                //   ),
+                // ),
               ],
             ),
           ),

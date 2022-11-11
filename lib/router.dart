@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_du_13/providers/user_provider.dart';
-import 'package:flutter_du_13/screens/Cart/cart_screen.dart';
+import 'package:flutter_du_13/screens/AddProduct/add_product_screen.dart';
 import 'package:flutter_du_13/screens/Home/home_screen.dart';
 import 'package:flutter_du_13/screens/SignIn/sign_in_screen.dart';
 import 'package:flutter_du_13/screens/SignUp/sign_up_screen.dart';
@@ -44,7 +44,7 @@ class AppRouter {
                 buildPageWithDefaultTransition<void>(
               context: context,
               state: state,
-              child: const HomePage(),
+              child: const SignUpScreen(),
             ),
           ),
           GoRoute(
@@ -75,6 +75,15 @@ class AppRouter {
               context: context,
               state: state,
               child: const SignUpScreen(),
+            ),
+          ),GoRoute(
+            name: "AddProduct",
+            path: '/addproduct',
+            pageBuilder: (BuildContext context, GoRouterState state) =>
+                buildPageWithDefaultTransition<void>(
+              context: context,
+              state: state,
+              child: const AddProductScreen(),
             ),
           ),
         ],
@@ -107,13 +116,17 @@ class AppRouter {
     redirect: (BuildContext context, GoRouterState state) {
       final String locPath = state.namedLocation("SignIn");
       final String signUpPath = state.namedLocation("SignUp");
+
       final String homePath = state.namedLocation("Home");
       final String cartPath = state.namedLocation("Cart");
       final String orderPath = state.namedLocation("Orders");
       final String profilPath = state.namedLocation("Profil");
+
+      final String addProduct = state.namedLocation("AddProduct");
+
       final List<String> authRoutes = userProvider.getRole() == "Acheteur"
           ? <String>[homePath, cartPath, orderPath, profilPath]
-          : <String>[homePath, cartPath, orderPath, profilPath];
+          : <String>[homePath, addProduct, profilPath];
 
       if ((!userProvider.isAuthenticated() || userProvider.getRole() == null) &&
           state.location != locPath &&

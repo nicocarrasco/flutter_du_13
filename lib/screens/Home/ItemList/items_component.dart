@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../providers/produit_provider.dart';
+import 'package:flutter_du_13/firebase/product.dart';
 import '../Card/card_component.dart';
 import '../detail_screen.dart';
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../providers/produit_provider.dart';
+import 'package:flutter_du_13/firebase/product.dart';
 import 'ItemList/items_component.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -14,21 +15,21 @@ class _SearchPageState extends State<HomePage> {
 
   final List<Product> _allProduct = <Product>[
     const Product(
-      id: "1",
+      // id: "1",
       picture:
-          "https://cdn.britannica.com/96/176196-050-EFC5E6A6/Glock-pistol.jpg",
+          "test",
       name: "gun",
       price: 29,
     ),
-    const Product(id: "2", picture: "test", name: "spoon", price: 40),
-    const Product(id: "3", picture: "test", name: "computer", price: 5),
-    const Product(id: "4", picture: "test", name: "bag", price: 35),
-    const Product(id: "5", picture: "test", name: "phone", price: 21),
-    const Product(id: "6", picture: "test", name: "phone case", price: 55),
-    const Product(id: "7", picture: "test", name: "chair", price: 30),
-    const Product(id: "8", picture: "test", name: "desk", price: 14),
-    const Product(id: "9", picture: "test", name: "pullovers", price: 100),
-    const Product(id: "10", picture: "test", name: "pant", price: 32),
+    const Product(picture: "test", name: "spoon", price: 40),
+    const Product(picture: "test", name: "computer", price: 5),
+    const Product(picture: "test", name: "bag", price: 35),
+    const Product(picture: "test", name: "phone", price: 21),
+    const Product(picture: "test", name: "phone case", price: 55),
+    const Product(picture: "test", name: "chair", price: 30),
+    const Product(picture: "test", name: "desk", price: 14),
+    const Product(picture: "test", name: "pullovers", price: 100),
+    const Product(picture: "test", name: "pant", price: 32),
   ];
 
   @override
