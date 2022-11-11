@@ -57,7 +57,6 @@ class UserProvider extends ChangeNotifier {
     }
     try {
       await _user!.updateDisplayName(name);
-      notifyListeners();
       return "Le nom a bien été changé";
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -69,20 +68,32 @@ class UserProvider extends ChangeNotifier {
 
   Future<String> updateEmail({
     required String email,
+    required String password,
   }) async {
     if (!isAuthenticated()) {
       return "L'utilisateur n'est pas authentifié";
     }
     try {
-      await _user!.updateEmail(email);
-      notifyListeners();
-      return "L'email a bien été changé";
+      final UserCredential userCred = await _user!.reauthenticateWithCredential(
+        EmailAuthProvider.credential(
+          email: getEmailAdress(),
+          password: password,
+        ),
+      );
+      if (userCred.user == null) {
+        throw Exception();
+      } else {
+        await userCred.user?.updateEmail(email);
+        return "L'email a bien été changé";
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         return "L'utilisateur n'existe pas";
+      } else if (e.code == 'wrong-password') {
+        return "Mot de passe incorrect";
       }
     } on PlatformException catch (e) {
-      if (e.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
+      if (e.code == 'EMAIL_EXISTS') {
         return "Email déjà utilisé";
       }
     }
