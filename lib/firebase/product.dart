@@ -1,5 +1,4 @@
 import 'dart:developer' as developer;
-import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -40,16 +39,11 @@ class ProductProvider extends ChangeNotifier {
   Future<String> sendFile(XFile? image) async {
     if (image != null) {
       try {
-        // if (!kIsWeb) {
         final Reference ref =
             FirebaseStorage.instance.ref('images/').child(image.name);
-        await ref.putFile(File(image.path));
+        await ref.putData(await image.readAsBytes());
         return ref.fullPath;
-        // } else {
-        // var ref = FirebaseStorageWeb().
-        // }
       } catch (e) {
-        developer.log(e.toString());
         await Fluttertoast.showToast(
           msg: e.toString(),
           toastLength: Toast.LENGTH_SHORT,
@@ -66,21 +60,15 @@ class ProductProvider extends ChangeNotifier {
     required XFile? image,
   }) async {
     try {
-      final FirebaseStorage storage = FirebaseStorage.instance;
       final User? userCreditential = FirebaseAuth.instance.currentUser;
 
       final Map<String, dynamic> jsonProduct = product.toJson();
       if (userCreditential != null) {
         jsonProduct["userId"] = userCreditential.uid;
       }
-      // await Fluttertoast.showToast(
-      //   msg: "tes1t",
-      //   toastLength: Toast.LENGTH_SHORT,
-      //   gravity: ToastGravity.BOTTOM,
-      //   backgroundColor: errorColor,);
       jsonProduct["picture"] = await sendFile(image);
       await FirebaseFirestore.instance.collection('products').add(jsonProduct);
-      return "Produit ajouté avec succès.";
+      return "Success";
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         return "L'utilisateur n'existe pas";

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_du_13/constants/colors.dart';
 import 'package:flutter_du_13/firebase/product.dart';
 import 'package:flutter_du_13/screens/AddProduct/ImagePicker/image_picker.dart';
@@ -143,6 +144,9 @@ class _AddProductFormState extends State<AddProductForm> {
                   hintText: "10",
                   // prefixIcon: Icon(Icons.lock, size: 14),
                 ),
+                inputFormatters: <TextInputFormatter>[
+                  	FilteringTextInputFormatter.digitsOnly
+	              ],
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
                     return 'Veuillez remplir ce champ';
@@ -155,23 +159,31 @@ class _AddProductFormState extends State<AddProductForm> {
           ),
           ElevatedButton(
             onPressed: () async {
+              if (_imagefile == null) {
+                await Fluttertoast.showToast(
+                  msg: "Veuillez ajouter une image du produit",
+                  toastLength: Toast.LENGTH_LONG,
+                  gravity: ToastGravity.BOTTOM,
+                  backgroundColor: errorColor,
+                  webBgColor: "#FF6666",
+                  webShowClose: true,
+                  webPosition: "center",
+                  textColor: backgroundLighterColor,
+                  fontSize: 16.0,
+                  timeInSecForIosWeb: 2,);
+                return;
+              }
               if (_formKey.currentState!.validate()) {
                 final String message =
                     await ProductProvider()
                       .addProduct(
                         product: Product(
-                          picture: "test",
+                          picture: "",
                           name: _productNameController.text,
                           price: int.parse(_productPriceController.text),
                         ),
                         image: _imagefile,
                       );
-
-                await Fluttertoast.showToast(
-                    msg: "test",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.BOTTOM,
-                    backgroundColor: errorColor,);
                 if (message != "Success") {
                   await Fluttertoast.showToast(
                     msg: message,
@@ -179,6 +191,25 @@ class _AddProductFormState extends State<AddProductForm> {
                     gravity: ToastGravity.BOTTOM,
                     backgroundColor: errorColor,
                     webBgColor: "#FF6666",
+                    webShowClose: true,
+                    webPosition: "center",
+                    textColor: backgroundLighterColor,
+                    fontSize: 16.0,
+                    timeInSecForIosWeb: 2,
+                  );
+                } else {
+                  setState(() {
+                    _imagefile = null;
+                  });
+                  _productNameController.clear();
+                  _productDescriptionController.clear();
+                  _productPriceController.clear();
+                  await Fluttertoast.showToast(
+                    msg: "Produit ajouté avec succès",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    backgroundColor: Colors.green,
+                    webBgColor: "#4CAF50",
                     webShowClose: true,
                     webPosition: "center",
                     textColor: backgroundLighterColor,

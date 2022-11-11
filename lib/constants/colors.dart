@@ -13,3 +13,4 @@ const Color textLighterColor = Color(0xFF424242);
 const Color placeholderColor = Color(0xFFA9A9A9);
 const Color placeholderLighterColor = Color(0xFFCACACA);
 const Color errorColor = Color(0xFFFF6666);
+const Color successColor = Color(0xFF66FF66);
