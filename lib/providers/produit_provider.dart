@@ -1,17 +1,18 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_du_13/firebase/product.dart';
 
-class Product {
-  const Product({
-    required this.id,
-    required this.picture,
-    required this.name,
-    required this.price,
-  });
-  final String id;
-  final String picture;
-  final String name;
-  final int price;
-}
+// class Product {
+//   const Product({
+//     required this.id,
+//     required this.picture,
+//     required this.name,
+//     required this.price,
+//   });
+//   final String id;
+//   final String picture;
+//   final String name;
+//   final int price;
+// }
 
 class ProduitProvider extends ChangeNotifier {
   List<Product> selectedProduct = <Product>[];
