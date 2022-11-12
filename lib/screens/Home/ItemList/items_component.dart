@@ -4,23 +4,23 @@ import 'package:flutter_du_13/firebase/product.dart';
 import '../Card/card_component.dart';
 import '../detail_screen.dart';
 
-class ItemList extends StatelessWidget {
-  const ItemList({
-    super.key,
-    required this.foundProducts,
-  });
-
+class ItemList extends StatefulWidget {
+  const ItemList({Key? key, required this.foundProducts}) : super(key: key);
   final List<Product> foundProducts;
+  @override
+  State<ItemList> createState() => _ItemListState();
+}
 
+class _ItemListState extends State<ItemList> {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisSpacing: 5,
         mainAxisSpacing: 5,
-        crossAxisCount: 2,
+        crossAxisCount: (MediaQuery.of(context).size.width ~/ 250).toInt(),
       ),
-      itemCount: foundProducts.length,
+      itemCount: widget.foundProducts.length,
       padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
@@ -29,12 +29,12 @@ class ItemList extends StatelessWidget {
               context,
               MaterialPageRoute<Widget>(
                 builder: (BuildContext context) => Detail(
-                  product: foundProducts[index],
+                  product: widget.foundProducts[index],
                 ),
               ),
             );
           },
-          child: ElevatedCard(product: foundProducts[index]),
+          child: ElevatedCard(product: widget.foundProducts[index]),
         );
       },
     );

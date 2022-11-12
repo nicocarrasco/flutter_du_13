@@ -23,6 +23,8 @@ class _CartPage extends State<Cart> {
         Provider.of<ProduitProvider>(context, listen: false)
             .selectedProduct
             .cast<Product>();
+    bool isMobile(BuildContext context) =>
+        MediaQuery.of(context).size.width < 600;
 
     return Scaffold(
       appBar: AppBar(
@@ -46,7 +48,7 @@ class _CartPage extends State<Cart> {
                 ),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: selectedProduct.length,
+                    itemCount: 20,
                     padding: const EdgeInsets.only(
                       left: 10,
                       right: 10,
@@ -59,38 +61,81 @@ class _CartPage extends State<Cart> {
                           ProduitProvider productProv,
                           Widget? child,
                         ) =>
-                            Dismissible(
-                          direction: DismissDirection.endToStart,
-                          key: UniqueKey(),
-                          onDismissed: (DismissDirection direction) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  '${productProv.selectedProduct[index].name} dismissed',
-                                ),
-                              ),
-                            );
-                            setState(() {
-                              productProv.removeProduct(index);
-                            });
-                          },
-                          // Show a red background as the item is swiped away.
-                          background: Container(
-                            alignment: AlignmentDirectional.centerEnd,
-                            color: Colors.red,
-                            child: const Padding(
-                              padding: EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
-                              child: Icon(
-                                size: 55,
-                                Icons.delete,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                          child: CardCart(
-                            product: productProv.selectedProduct[index],
-                          ),
-                        ),
+                            isMobile(context)
+                                ? Dismissible(
+                                    direction: DismissDirection.endToStart,
+                                    key: UniqueKey(),
+                                    onDismissed: (DismissDirection direction) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            '${productProv.selectedProduct[index].name} dismissed',
+                                          ),
+                                        ),
+                                      );
+                                      setState(() {
+                                        productProv.removeProduct(index);
+                                      });
+                                    },
+                                    // Show a red background as the item is swiped away.
+                                    background: Container(
+                                      alignment: AlignmentDirectional.centerEnd,
+                                      color: Colors.red,
+                                      child: const Padding(
+                                        padding: EdgeInsets.fromLTRB(
+                                          0.0,
+                                          0.0,
+                                          10.0,
+                                          0.0,
+                                        ),
+                                        child: Icon(
+                                          size: 55,
+                                          Icons.delete,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                    child: CardCart(
+                                      product:
+                                          productProv.selectedProduct[index],
+                                    ),
+                                  )
+                                : Row(
+                                    children: <Widget>[
+                                      Expanded(
+                                        child: CardCart(
+                                          product: productProv
+                                              .selectedProduct[index],
+                                        ),
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                '${productProv.selectedProduct[index].name} dismissed',
+                                              ),
+                                            ),
+                                          );
+                                          setState(() {
+                                            productProv.removeProduct(index);
+                                          });
+                                        },
+                                        child: const Icon(
+                                          size: 25,
+                                          Icons.close,
+                                          color: Color.fromARGB(
+                                            255,
+                                            229,
+                                            115,
+                                            115,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                       );
                     },
                   ),
