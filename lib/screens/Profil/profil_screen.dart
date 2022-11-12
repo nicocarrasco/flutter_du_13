@@ -14,7 +14,6 @@ class ProfilPage extends StatefulWidget {
 }
 
 class _SearchProfilState extends State<ProfilPage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +23,7 @@ class _SearchProfilState extends State<ProfilPage> {
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget> [
+              children: <Widget>[
                 const ProfilPicture(),
                 const Divider(
                   height: 20,
@@ -43,7 +42,9 @@ class _SearchProfilState extends State<ProfilPage> {
                 ),
                 TextButton(
                   style: TextButton.styleFrom(
-                    padding: EdgeInsets.zero,
+                    padding: const EdgeInsets.symmetric(vertical: 5),
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
                   onPressed: () {
                     Navigator.push(
@@ -62,39 +63,25 @@ class _SearchProfilState extends State<ProfilPage> {
                     ),
                   ),
                 ),
-              ],
-            ),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              await Provider.of<UserProvider>(context, listen: false)
-                  .signOut();
-            },
-            style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.zero,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-            ),
-            child: Ink(
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  end: Alignment(2.5, 2.5),
-                  colors: <Color>[primaryDarkerColor, primaryLighterColor],
-                ),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: const SizedBox(
-                width: 300,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 17),
-                  child: Text(
-                    'Deconnexion',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 5),
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  onPressed: () {
+                    Provider.of<UserProvider>(context, listen: false).signOut();
+                  },
+                  child: const Text(
+                    "Se déconnecter",
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: errorColor,
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
           ),
         ],
