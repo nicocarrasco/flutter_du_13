@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_du_13/constants/colors.dart';
+import 'package:flutter_du_13/providers/user_provider.dart';
 import 'package:flutter_du_13/screens/Profil/profil_email.dart';
 import 'package:flutter_du_13/screens/Profil/profile_form.dart';
 import 'package:flutter_du_13/screens/Profil/profile_picture.dart';
+import 'package:provider/provider.dart';
 
 class ProfilPage extends StatefulWidget {
   const ProfilPage({Key? key}) : super(key: key);
@@ -61,6 +63,38 @@ class _SearchProfilState extends State<ProfilPage> {
                   ),
                 ),
               ],
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              await Provider.of<UserProvider>(context, listen: false)
+                  .signOut();
+            },
+            style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.zero,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+            child: Ink(
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  end: Alignment(2.5, 2.5),
+                  colors: <Color>[primaryDarkerColor, primaryLighterColor],
+                ),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: const SizedBox(
+                width: 300,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 17),
+                  child: Text(
+                    'Deconnexion',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  ),
+                ),
+              ),
             ),
           ),
         ],

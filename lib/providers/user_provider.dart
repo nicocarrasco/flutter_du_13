@@ -133,6 +133,10 @@ class UserProvider extends ChangeNotifier {
     return "Une erreur est survenue";
   }
 
+  Future<void> signOut() async {
+     await FirebaseAuth.instance.signOut();
+  }
+
   Future<String> signIn({
     required String emailAddress,
     required String password,

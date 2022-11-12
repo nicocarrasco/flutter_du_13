@@ -88,9 +88,9 @@ class _BottomBarState extends State<BottomBar> {
 
   void _onItemTapped(int index) {
     setState(() {
-      isBuyer =
-          Provider.of<UserProvider>(context, listen: false).getRole() ==
-              "Acheteur";
+      // isBuyer =
+      //     Provider.of<UserProvider>(context, listen: false).getRole() ==
+      //         "Acheteur";
       final List<String> routes = isBuyer
           ? <String>["/", "/cart", "/orders", "/profil"]
           : <String>["/", "/addProduct", "/profil"];

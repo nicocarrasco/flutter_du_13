@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_du_13/firebase/product.dart';
+import 'package:flutter_du_13/providers/produit_provider.dart';
+import 'package:provider/provider.dart';
 
 class Detail extends StatelessWidget {
   const Detail({super.key, required this.product});
@@ -25,7 +27,24 @@ class Detail extends StatelessWidget {
                     child: SizedBox(
                       height: 250,
                       child: Center(
-                        child: Image.network(product.picture),
+                        child: product.image != null ?
+                        Image.network(
+                          product.image!,
+                          width: 100,
+                          height: 100,
+                          loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                            if (loadingProgress == null) {
+                              return child;
+                            } else {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                              );
+                            }
+                          },
+                        ) :
+                        const Image(
+                          image: AssetImage('images/image-not-found.jpg'),
+                        ),
                       ),
                     ),
                   ),
@@ -58,20 +77,20 @@ class Detail extends StatelessWidget {
                     ),
                   ),
                 ),
-                // Consumer<ProduitProvider>(
-                //   builder: (
-                //     BuildContext context,
-                //     ProduitProvider productProv,
-                //     Widget? child,
-                //   ) =>
-                //       ElevatedButton(
-                //     onPressed: () {
-                //       productProv.addProduct(product);
-                //       Navigator.pop(context);
-                //     },
-                //     child: const Text('Buy'),
-                //   ),
-                // ),
+                Consumer<ProduitProvider>(
+                  builder: (
+                    BuildContext context,
+                    ProduitProvider productProv,
+                    Widget? child,
+                  ) =>
+                      ElevatedButton(
+                    onPressed: () {
+                      productProv.addProduct(product);
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Buy'),
+                  ),
+                ),
               ],
             ),
           ),

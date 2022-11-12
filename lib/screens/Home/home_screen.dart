@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_du_13/firebase/product.dart';
+import 'package:flutter_du_13/providers/user_provider.dart';
+import 'package:provider/provider.dart';
+
 import 'ItemList/items_component.dart';
+
 
 
 class HomePage extends StatefulWidget {
@@ -13,31 +17,27 @@ class HomePage extends StatefulWidget {
 class _SearchPageState extends State<HomePage> {
   List<Product> _foundProducts = <Product>[];
 
-  final List<Product> _allProduct = <Product>[
-    const Product(
-      // id: "1",
-      picture:
-          "test",
-      name: "gun",
-      description: "",
-      price: 29,
-    ),
-    const Product(picture: "test", description: "", name: "spoon", price: 40),
-    const Product(picture: "test", description: "", name: "computer", price: 5),
-    const Product(picture: "test", description: "", name: "bag", price: 35),
-    const Product(picture: "test", description: "", name: "phone", price: 21),
-    const Product(picture: "test", description: "", name: "phone case", price: 55),
-    const Product(picture: "test", description: "", name: "chair", price: 30),
-    const Product(picture: "test", description: "", name: "desk", price: 14),
-    const Product(picture: "test", description: "", name: "pullovers", price: 100),
-    const Product(picture: "test", description: "", name: "pant", price: 32),
-  ];
+  List<Product> _allProduct = <Product>[];
+  late final bool isSeller;
 
   @override
   void initState() {
+    isSeller = Provider.of<UserProvider>(context, listen: false).getRole() == "Vendeur";
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getData(isSeller);
+    });
+
     _foundProducts = _allProduct;
     super.initState();
   }
+
+  Future<void> getData(bool isSeller) async {
+     _allProduct = await ProductProvider().getProducts(isSeller);
+    setState(() {
+      _foundProducts = _allProduct;
+    });
+  }
+
 
   void _runFilter(String enteredKeyword) {
     List<Product> results = <Product>[];
@@ -65,7 +65,7 @@ class _SearchPageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: isSeller ? const Text('Mes produits en vente') : const Text('Produits en vente'),
       ),
       body: Column(
         children: <Widget>[
@@ -76,7 +76,7 @@ class _SearchPageState extends State<HomePage> {
               child: TextField(
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.search),
-                  labelText: "Search your product...",
+                  labelText: "Cherchez vos produits...",
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(12)),
                     borderSide: BorderSide(
@@ -99,11 +99,16 @@ class _SearchPageState extends State<HomePage> {
                 ? ItemList(
                     foundProducts: _foundProducts,
                   )
-                : const Center(
-                    child: Text(
-                      'No results found',
-                      style: TextStyle(fontSize: 24),
-                    ),
+                : Center(
+                    child: isSeller?
+                      const Text(
+                        'Vous n\'avez aucun produit en vente',
+                        style: TextStyle(fontSize: 24),
+                      ) :
+                      const Text(
+                        'Aucun produit à acheter',
+                        style: TextStyle(fontSize: 24),
+                      ),
                   ),
           ),
         ],

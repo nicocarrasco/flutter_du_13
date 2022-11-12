@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_du_13/constants/colors.dart';
-
-import '../../../providers/produit_provider.dart';
+import 'package:flutter_du_13/firebase/product.dart';
 
 class CardCart extends StatelessWidget {
   const CardCart({super.key, required this.product});
@@ -28,9 +27,24 @@ class CardCart extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Hero(
-                tag: product.id,
-                child: Image.network(
-                  product.picture,
+                tag: product.userId ?? "",
+                child: product.image != null ?
+                Image.network(
+                  product.image!,
+                  width: 100,
+                  height: 100,
+                  loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
+                ) :
+                const Image(
+                  image: AssetImage('images/image-not-found.jpg'),
                   width: 100,
                   height: 100,
                 ),
@@ -53,7 +67,7 @@ class CardCart extends StatelessWidget {
                   const Spacer(),
                   const Text('ref: ZFcse0984'),
                   Text(
-                    'QTY: ${product.id}',
+                    'QTY: ${product.userId ?? ""}',
                   ),
                   const Spacer(),
                 ],
