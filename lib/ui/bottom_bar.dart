@@ -18,26 +18,26 @@ class BottomBar extends StatefulWidget {
 }
 
 List<NavigationRailDestination> getWebBuyerBottomBar() {
-    return <NavigationRailDestination>[
-      // navigation destinations
-      const NavigationRailDestination(
-        icon: Icon(Icons.search, size: 30),
-        label: Text(''),
-      ),
-      const NavigationRailDestination(
-        icon: Icon(Icons.shopping_cart_outlined, size: 30),
-        label: Text(''),
-      ),
-      const NavigationRailDestination(
-        icon: Icon(Icons.format_list_bulleted, size: 30),
-        label: Text(''),
-      ),
-      const NavigationRailDestination(
-        icon: Icon(Icons.person, size: 30),
-        label: Text(''),
-      ),
-    ];
-  }
+  return <NavigationRailDestination>[
+    // navigation destinations
+    const NavigationRailDestination(
+      icon: Icon(Icons.search, size: 30),
+      label: Text(''),
+    ),
+    const NavigationRailDestination(
+      icon: Icon(Icons.shopping_cart_outlined, size: 30),
+      label: Text(''),
+    ),
+    const NavigationRailDestination(
+      icon: Icon(Icons.format_list_bulleted, size: 30),
+      label: Text(''),
+    ),
+    const NavigationRailDestination(
+      icon: Icon(Icons.person, size: 30),
+      label: Text(''),
+    ),
+  ];
+}
 
 List<NavigationRailDestination> getWebSellerBottomBar() {
   return <NavigationRailDestination>[
@@ -63,7 +63,7 @@ List<Widget> getMobileBuyerBottomBar() {
     const Icon(Icons.shopping_cart_outlined, size: 30),
     const Icon(Icons.format_list_bulleted, size: 30),
     const Icon(Icons.person, size: 30)
-    ];
+  ];
 }
 
 List<Widget> getMobileSellerBottomBar() {
@@ -71,8 +71,7 @@ List<Widget> getMobileSellerBottomBar() {
     const Icon(Icons.search, size: 30),
     const Icon(Icons.add_circle_outlined, size: 30),
     const Icon(Icons.person, size: 30)
-    ];
-
+  ];
 }
 
 class _BottomBarState extends State<BottomBar> {
@@ -83,7 +82,7 @@ class _BottomBarState extends State<BottomBar> {
   void initState() {
     super.initState();
     isBuyer = Provider.of<UserProvider>(context, listen: false).getRole() ==
-              "Acheteur";
+        "Acheteur";
   }
 
   void _onItemTapped(int index) {
@@ -111,7 +110,9 @@ class _BottomBarState extends State<BottomBar> {
                   onDestinationSelected: _onItemTapped,
                   labelType: NavigationRailLabelType.selected,
                   backgroundColor: backgroundLighterColor,
-                  destinations: isBuyer ? getWebBuyerBottomBar() : getWebSellerBottomBar(),
+                  destinations: isBuyer
+                      ? getWebBuyerBottomBar()
+                      : getWebSellerBottomBar(),
                   selectedIconTheme: const IconThemeData(color: primaryColor),
                   unselectedIconTheme: const IconThemeData(color: textColor),
                   unselectedLabelTextStyle: const TextStyle(color: textColor),
@@ -123,9 +124,11 @@ class _BottomBarState extends State<BottomBar> {
       backgroundColor: backgroundColor,
       bottomNavigationBar: !kIsWeb
           ? CurvedNavigationBar(
-              backgroundColor: backgroundColor,
+              backgroundColor: Colors.transparent,
               buttonBackgroundColor: primaryColor,
-              items: isBuyer ? getMobileBuyerBottomBar() : getMobileSellerBottomBar(),
+              items: isBuyer
+                  ? getMobileBuyerBottomBar()
+                  : getMobileSellerBottomBar(),
               onTap: _onItemTapped,
             )
           : null,

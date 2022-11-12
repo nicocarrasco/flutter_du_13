@@ -69,7 +69,7 @@ class _ProfilPictureState extends State<ProfilPicture> {
         msg: message,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
-        backgroundColor: !isError ? errorColor : primaryColor,
+        backgroundColor: isError ? errorColor : primaryColor,
         webBgColor: "#72B2D5",
         webShowClose: true,
         webPosition: "center",
@@ -84,7 +84,7 @@ class _ProfilPictureState extends State<ProfilPicture> {
   Widget build(BuildContext context) {
     return Center(
       child: Column(
-        children: <Widget> [
+        children: <Widget>[
           if (_isLoading)
             Container(
               margin: const EdgeInsets.all(20),
