@@ -72,7 +72,7 @@ class _ProfilPictureState extends State<ProfilPicture> {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         backgroundColor: isError ? errorColor : primaryColor,
-        webBgColor: "#72B2D5",
+        webBgColor: isError ? "#FF6666" : "#72B2D5",
         webShowClose: true,
         webPosition: "center",
         textColor: backgroundLighterColor,
