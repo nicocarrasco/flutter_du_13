@@ -59,8 +59,9 @@ class Detail extends StatelessWidget {
                   child: Text(product.name),
                 ),
                 Row(
-                  children: const <Widget>[
-                    Text("Description:"),
+                  children: <Widget>[
+                    const Text("Description: "),
+                    Text(product.description),
                   ],
                 ),
               ],
