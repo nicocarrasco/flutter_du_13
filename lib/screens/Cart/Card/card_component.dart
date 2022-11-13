@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_du_13/constants/colors.dart';
-import 'package:flutter_du_13/firebase/product.dart';
+import 'package:flutter_du_13/providers/product.dart';
 
 class CardCart extends StatelessWidget {
   const CardCart({super.key, required this.product});
