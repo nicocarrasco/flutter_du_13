@@ -190,10 +190,8 @@ class _CartPage extends State<Cart> {
                               timeInSecForIosWeb: 2,
                             );
                           } else {
-                            setState(() {
-                              selectedProduct:
-                              [];
-                            });
+                            if (!mounted) return;
+                            setState(() {});
                             Provider.of<ProduitProvider>(context, listen: false)
                                 .removeAllProducts();
                             await Fluttertoast.showToast(
