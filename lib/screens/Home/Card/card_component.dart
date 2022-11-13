@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_du_13/constants/colors.dart';
-import 'package:flutter_du_13/firebase/product.dart';
-
+import 'package:flutter_du_13/providers/product.dart';
 
 class ElevatedCard extends StatelessWidget {
   const ElevatedCard({super.key, required this.product});
@@ -27,26 +26,30 @@ class ElevatedCard extends StatelessWidget {
             Center(
               child: Hero(
                 tag: product.name,
-                child: product.image != null ?
-                Image.network(
-                  product.image!,
-                  width: 100,
-                  height: 100,
-                  loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                    if (loadingProgress == null) {
-                      return child;
-                    } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                      );
-                    }
-                  },
-                ) :
-                const Image(
-                  image: AssetImage('images/image-not-found.jpg'),
-                  width: 100,
-                  height: 100,
-                ),
+                child: product.image != null
+                    ? Image.network(
+                        product.image!,
+                        width: 100,
+                        height: 100,
+                        loadingBuilder: (
+                          BuildContext context,
+                          Widget child,
+                          ImageChunkEvent? loadingProgress,
+                        ) {
+                          if (loadingProgress == null) {
+                            return child;
+                          } else {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                        },
+                      )
+                    : const Image(
+                        image: AssetImage('images/image-not-found.jpg'),
+                        width: 100,
+                        height: 100,
+                      ),
               ),
             ),
             const Spacer(

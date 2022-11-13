@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_du_13/constants/colors.dart';
-import 'package:flutter_du_13/firebase/product.dart';
+import 'package:flutter_du_13/providers/product.dart';
 import 'package:flutter_du_13/screens/AddProduct/ImagePicker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';

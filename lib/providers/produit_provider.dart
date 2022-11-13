@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_du_13/firebase/product.dart';
+import 'package:flutter_du_13/providers/product.dart';
 
 // class Product {
 //   const Product({

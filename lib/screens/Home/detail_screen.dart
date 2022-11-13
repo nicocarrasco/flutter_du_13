@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_du_13/firebase/product.dart';
+import 'package:flutter_du_13/providers/product.dart';
 import 'package:flutter_du_13/providers/produit_provider.dart';
 import 'package:provider/provider.dart';
 
 class Detail extends StatelessWidget {
-  const Detail({super.key, required this.product});
+  const Detail({super.key, required this.product, required this.isSeller});
 
   final Product product;
+  final bool isSeller;
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +59,9 @@ class Detail extends StatelessWidget {
                   child: Text(product.name),
                 ),
                 Row(
-                  children: const <Widget>[
-                    Text("Description:"),
+                  children: <Widget>[
+                    const Text("Description: "),
+                    Text(product.description),
                   ],
                 ),
               ],
@@ -81,20 +83,21 @@ class Detail extends StatelessWidget {
                     ),
                   ),
                 ),
-                Consumer<ProduitProvider>(
-                  builder: (
-                    BuildContext context,
-                    ProduitProvider productProv,
-                    Widget? child,
-                  ) =>
-                      ElevatedButton(
-                    onPressed: () {
-                      productProv.addProduct(product);
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Ajouter au panier'),
+                if (!isSeller)
+                  Consumer<ProduitProvider>(
+                    builder: (
+                      BuildContext context,
+                      ProduitProvider productProv,
+                      Widget? child,
+                    ) =>
+                        ElevatedButton(
+                      onPressed: () {
+                        productProv.addProduct(product);
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Ajouter au panier'),
+                    ),
                   ),
-                ),
               ],
             ),
           ),

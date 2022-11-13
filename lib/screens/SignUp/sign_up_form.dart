@@ -88,7 +88,7 @@ class _SignUpFormState extends State<SignUpForm> {
                           child: Column(
                             children: <Widget>[
                               SvgPicture.asset(
-                                "assets/images/seller.svg",
+                                "assets/images/buyer.svg",
                                 height: 75,
                                 fit: BoxFit.scaleDown,
                               ),

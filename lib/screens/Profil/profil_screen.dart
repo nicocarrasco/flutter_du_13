@@ -17,6 +17,13 @@ class _SearchProfilState extends State<ProfilPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: backgroundColor,
+        shadowColor: Colors.transparent,
+        iconTheme: const IconThemeData(
+          color: primaryDarkerColor, //change your color here
+        ),
+      ),
       body: Column(
         children: <Widget>[
           Padding(

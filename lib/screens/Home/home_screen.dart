@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_du_13/firebase/product.dart';
+import 'package:flutter_du_13/providers/product.dart';
 import 'package:flutter_du_13/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'ItemList/items_component.dart';
-
-
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -22,7 +20,8 @@ class _SearchPageState extends State<HomePage> {
 
   @override
   void initState() {
-    isSeller = Provider.of<UserProvider>(context, listen: false).getRole() == "Vendeur";
+    isSeller = Provider.of<UserProvider>(context, listen: false).getRole() ==
+        "Vendeur";
     WidgetsBinding.instance.addPostFrameCallback((_) {
       getData(isSeller);
     });
@@ -32,12 +31,11 @@ class _SearchPageState extends State<HomePage> {
   }
 
   Future<void> getData(bool isSeller) async {
-     _allProduct = await ProductProvider().getProducts(isSeller);
+    _allProduct = await ProductProvider().getProducts(isSeller);
     setState(() {
       _foundProducts = _allProduct;
     });
   }
-
 
   void _runFilter(String enteredKeyword) {
     List<Product> results = <Product>[];
@@ -65,7 +63,9 @@ class _SearchPageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: isSeller ? const Text('Mes produits en vente') : const Text('Produits en vente'),
+        title: isSeller
+            ? const Text('Mes produits en vente')
+            : const Text('Produits en vente'),
       ),
       body: Column(
         children: <Widget>[
@@ -98,17 +98,18 @@ class _SearchPageState extends State<HomePage> {
             child: _foundProducts.isNotEmpty
                 ? ItemList(
                     foundProducts: _foundProducts,
+                    isSeller: isSeller,
                   )
                 : Center(
-                    child: isSeller?
-                      const Text(
-                        'Vous n\'avez aucun produit en vente',
-                        style: TextStyle(fontSize: 24),
-                      ) :
-                      const Text(
-                        'Aucun produit à acheter',
-                        style: TextStyle(fontSize: 24),
-                      ),
+                    child: isSeller
+                        ? const Text(
+                            'Vous n\'avez aucun produit en vente',
+                            style: TextStyle(fontSize: 24),
+                          )
+                        : const Text(
+                            'Aucun produit à acheter',
+                            style: TextStyle(fontSize: 24),
+                          ),
                   ),
           ),
         ],

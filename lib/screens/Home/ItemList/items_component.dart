@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_du_13/firebase/product.dart';
+import 'package:flutter_du_13/providers/product.dart';
 import '../Card/card_component.dart';
 import '../detail_screen.dart';
 
 class ItemList extends StatefulWidget {
-  const ItemList({Key? key, required this.foundProducts}) : super(key: key);
+  const ItemList({
+    Key? key,
+    required this.foundProducts,
+    required this.isSeller,
+  }) : super(key: key);
   final List<Product> foundProducts;
+  final bool isSeller;
   @override
   State<ItemList> createState() => _ItemListState();
 }
@@ -30,6 +35,7 @@ class _ItemListState extends State<ItemList> {
               MaterialPageRoute<Widget>(
                 builder: (BuildContext context) => Detail(
                   product: widget.foundProducts[index],
+                  isSeller: widget.isSeller,
                 ),
               ),
             );
