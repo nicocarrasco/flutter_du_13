@@ -1,16 +1,25 @@
 # flutter_du_13
 
-A new Flutter project.
+## Project
 
-## Getting Started
+This project is an e-shop app where people can buy and sell all kind of stuff. There is 2 types of account : buyer or seller.
 
-This project is a starting point for a Flutter application.
+## Deploy the app locally
 
-A few resources to get you started if this is your first Flutter project:
+First clone this project and enter the project directory.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### On Ios
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+You need a Mac with Xcode installed.
+Open a simulator with `open -a Simulator` in your terminal.
+Then run `flutter run`.
+
+More infos on : https://docs.flutter.dev/get-started/install/macos#ios-setup
+
+### On Web
+
+Run `flutter run -d chrome`.
+
+### On Android
+
+More infos on : https://docs.flutter.dev/get-started/install/macos#install-android-studio
