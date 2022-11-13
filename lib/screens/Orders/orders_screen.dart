@@ -32,33 +32,32 @@ class _OrdersPageState extends State<OrdersPage> {
       appBar: AppBar(
         title: const Text('Commandes passées'),
       ),
-      body: Column(
-        children: <Widget>[
-          if (_allOrders.isNotEmpty)
-            Expanded(
-              child: ListView.builder(
-                itemCount: _allOrders.length,
-                padding: const EdgeInsets.only(
-                  left: 10,
-                  right: 10,
-                  bottom: 10,
-                ),
-                itemBuilder: (BuildContext context, int index) {
-                  return CardOrder(
-                    order: _allOrders[index],
-                  );
-                },
-              ),
+      body: _allOrders.isNotEmpty
+          ? Column(
+              children: <Widget>[
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: _allOrders.length,
+                    padding: const EdgeInsets.only(
+                      left: 10,
+                      right: 10,
+                      bottom: 10,
+                    ),
+                    itemBuilder: (BuildContext context, int index) {
+                      return CardOrder(
+                        order: _allOrders[index],
+                      );
+                    },
+                  ),
+                )
+              ],
             )
-          else
-            const Center(
+          : const Center(
               child: Text(
                 'Vous n\'avez pas encore passé de commande',
                 style: TextStyle(fontSize: 24),
               ),
             ),
-        ],
-      ),
     );
   }
 }

@@ -28,7 +28,7 @@ class ProduitProvider extends ChangeNotifier {
   }
 
   void removeAllProducts() {
-    selectedProduct = [];
+    selectedProduct = <Product>[];
     notifyListeners();
   }
 }

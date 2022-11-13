@@ -28,7 +28,7 @@ class CardOrder extends StatelessWidget {
               const SizedBox(height: 10),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   Text('Prix total : ${order.price} €'),
                   const SizedBox(height: 10),
                   Text(
