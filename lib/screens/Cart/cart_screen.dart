@@ -29,11 +29,12 @@ class _CartPage extends State<Cart> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cart'),
+        title: const Text('Panier'),
       ),
       body: selectedProduct.isEmpty
           ? const Center(
-              child: Text("Your cart is empty", style: TextStyle(fontSize: 24)),
+              child:
+                  Text("Votre panier est vide", style: TextStyle(fontSize: 24)),
             )
           : Column(
               children: <Widget>[
@@ -42,8 +43,8 @@ class _CartPage extends State<Cart> {
                   child: Row(
                     children: <Widget>[
                       Text(
-                        '${selectedProduct.length} ${selectedProduct.length > 1 ? "items" : "item"}',
-                      )
+                        '${selectedProduct.length} ${selectedProduct.length > 1 ? "produits" : "produit"}',
+                      ),
                     ],
                   ),
                 ),
@@ -71,7 +72,7 @@ class _CartPage extends State<Cart> {
                                           .showSnackBar(
                                         SnackBar(
                                           content: Text(
-                                            '${productProv.selectedProduct[index].name} dismissed',
+                                            '${productProv.selectedProduct[index].name} supprimé du panier',
                                           ),
                                         ),
                                       );
@@ -116,7 +117,7 @@ class _CartPage extends State<Cart> {
                                               .showSnackBar(
                                             SnackBar(
                                               content: Text(
-                                                '${productProv.selectedProduct[index].name} dismissed',
+                                                '${productProv.selectedProduct[index].name} supprimé du panier',
                                               ),
                                             ),
                                           );
@@ -142,15 +143,24 @@ class _CartPage extends State<Cart> {
                   ),
                 ),
                 Padding(
-                  padding:
-                      const EdgeInsets.only(right: 20, top: 10, bottom: 20),
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: 10,
+                    bottom: 20,
+                  ),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      const Spacer(),
                       Text(
                         selectedProduct.isNotEmpty
                             ? 'Total: ${selectedProduct.map((Product e) => e.price).reduce((int value, int element) => value + element)} €'
                             : '0€',
+                      ),
+                      const Spacer(),
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: const Text('Commander'),
                       ),
                     ],
                   ),

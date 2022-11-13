@@ -163,6 +163,7 @@ class UserProvider extends ChangeNotifier {
     required String emailAddress,
     required String password,
     required String role,
+    required String name,
   }) async {
     try {
       final UserCredential newUserCreditential =
@@ -174,6 +175,7 @@ class UserProvider extends ChangeNotifier {
           .collection('users')
           .doc(newUserCreditential.user?.uid)
           .set(<String, dynamic>{'role': role});
+      await newUserCreditential.user?.updateDisplayName(name);
       return "Success";
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {

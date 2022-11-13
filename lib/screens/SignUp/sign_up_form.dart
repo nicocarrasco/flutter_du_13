@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_du_13/constants/colors.dart';
 import 'package:flutter_du_13/providers/user_provider.dart';
+import 'package:flutter_du_13/utils/validate_email.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
@@ -20,6 +21,7 @@ class SignUpForm extends StatefulWidget {
 class _SignUpFormState extends State<SignUpForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   String _accountType = "Acheteur";
   @override
@@ -157,6 +159,35 @@ class _SignUpFormState extends State<SignUpForm> {
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
                 ),
+                "Nom d'utilisateur",
+              ),
+              const SizedBox(height: 15),
+              TextFormField(
+                controller: _nameController,
+                keyboardType: TextInputType.emailAddress,
+                cursorColor: primaryColor,
+                decoration: const InputDecoration(
+                  hintText: "John Doe",
+                  prefixIcon: Icon(Icons.person, size: 14),
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Veuillez remplir ce champ';
+                  }
+                  return null;
+                },
+              )
+            ],
+          ),
+          const SizedBox(height: 30),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const Text(
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                ),
                 "Adresse email",
               ),
               const SizedBox(height: 15),
@@ -172,7 +203,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   if (value == null || value.isEmpty) {
                     return 'Veuillez remplir ce champ';
                   }
-                  return null;
+                  return validateEmail(value);
                 },
               )
             ],
@@ -214,6 +245,7 @@ class _SignUpFormState extends State<SignUpForm> {
                         .signUp(
                   emailAddress: _emailController.text,
                   password: _passwordController.text,
+                  name: _nameController.text,
                   role: _accountType,
                 );
 

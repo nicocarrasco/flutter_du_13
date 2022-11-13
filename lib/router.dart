@@ -3,6 +3,7 @@ import 'package:flutter_du_13/providers/user_provider.dart';
 import 'package:flutter_du_13/screens/AddProduct/add_product_screen.dart';
 import 'package:flutter_du_13/screens/Cart/cart_screen.dart';
 import 'package:flutter_du_13/screens/Home/home_screen.dart';
+import 'package:flutter_du_13/screens/Orders/orders_screen.dart';
 import 'package:flutter_du_13/screens/Profil/profil_screen.dart';
 import 'package:flutter_du_13/screens/SignIn/sign_in_screen.dart';
 import 'package:flutter_du_13/screens/SignUp/sign_up_screen.dart';
@@ -66,7 +67,7 @@ class AppRouter {
                 buildPageWithDefaultTransition<void>(
               context: context,
               state: state,
-              child: const SignUpScreen(),
+              child: const OrdersPage(),
             ),
           ),
           GoRoute(
