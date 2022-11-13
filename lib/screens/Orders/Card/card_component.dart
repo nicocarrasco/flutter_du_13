@@ -32,7 +32,7 @@ class CardOrder extends StatelessWidget {
                   Text('Prix total : ${order.price} €'),
                   const SizedBox(height: 10),
                   Text(
-                    'Date : ${order.date.day}/${order.date.month}/${order.date.year} à ${order.date.hour}h${order.date.minute}',
+                    'Date : ${order.date.day}/${order.date.month}/${order.date.year} à ${order.date.hour}h${order.date.minute.toString().padLeft(2, '0')}',
                   ),
                 ],
               ),
