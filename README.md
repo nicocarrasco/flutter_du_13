@@ -75,13 +75,24 @@ More infos on : https://docs.flutter.dev/get-started/install/macos#install-andro
   ### Architecture
   
   `/assets` Contain all images and fonts of the application
+  
   `/android` Contain all files relative to Android execution.
+  
   `/ios` Contain all files relative to iOS execution.
+  
   `/lib/` Contain all source code
+  
   `/lib/animations` File code for animation
+  
   `/lib/constants` Files with colors and responsive constants
+  
   `/lib/providers` Files code with all the model provider
+  
   `/lib/screens` Folders for each page of the application
+  
   `/lib/ui` shared components
+  
   `/lib/utils` functions that can be used in all the application
+  
   `/lib/router.dart` Contain all route of the application.
+  
