@@ -44,11 +44,9 @@ class Product {
 }
 
 class ProductProvider extends ChangeNotifier {
-
   Future<String?> getFile(String imagePath) async {
     try {
-      final Reference ref =
-              FirebaseStorage.instance.ref(imagePath);
+      final Reference ref = FirebaseStorage.instance.ref(imagePath);
       final String datas = await ref.getDownloadURL();
       return datas;
     } catch (e) {
@@ -58,13 +56,15 @@ class ProductProvider extends ChangeNotifier {
 
   Future<List<Product>> getProducts(bool isSeller) async {
     final List<Product> productList = <Product>[];
-    final QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore.instance.collection("products").get();
+    final QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await FirebaseFirestore.instance.collection("products").get();
     final User? userCreditential = FirebaseAuth.instance.currentUser;
 
     for (int i = 0; i < querySnapshot.docs.length; i++) {
       final dynamic a = querySnapshot.docs[i].data();
       if (isSeller) {
-        if (!(userCreditential != null && userCreditential.uid == a["userId"])) {
+        if (!(userCreditential != null &&
+            userCreditential.uid == a["userId"])) {
           continue;
         }
       }
@@ -89,6 +89,9 @@ class ProductProvider extends ChangeNotifier {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           backgroundColor: errorColor,
+          webBgColor: "#FF6666",
+          webShowClose: true,
+          webPosition: "center",
         );
       }
     }
