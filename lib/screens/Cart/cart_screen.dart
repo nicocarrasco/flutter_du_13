@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_du_13/constants/colors.dart';
 import 'package:flutter_du_13/providers/order.dart';
 import 'package:flutter_du_13/providers/product.dart';
+import 'package:flutter_du_13/providers/sell_order_provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
@@ -190,6 +191,17 @@ class _CartPage extends State<Cart> {
                               timeInSecForIosWeb: 2,
                             );
                           } else {
+                            if (!mounted) return;
+                            for (Product element in selectedProduct) {
+                              await SellOrderProvider().addSellOrder(
+                                sellOrder: SellOrder(
+                                  product: element.name,
+                                  price: element.price,
+                                  date: DateTime.now(),
+                                ),
+                                product: element,
+                              );
+                            }
                             if (!mounted) return;
                             setState(() {});
                             Provider.of<ProduitProvider>(context, listen: false)
