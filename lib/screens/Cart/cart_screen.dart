@@ -49,7 +49,7 @@ class _CartPage extends State<Cart> {
                 ),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: 20,
+                    itemCount: selectedProduct.length,
                     padding: const EdgeInsets.only(
                       left: 10,
                       right: 10,

@@ -28,26 +28,27 @@ class CardCart extends StatelessWidget {
             children: <Widget>[
               Hero(
                 tag: product.userId ?? "",
-                child: product.image != null ?
-                Image.network(
-                  product.image!,
-                  width: 100,
-                  height: 100,
-                  loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                    if (loadingProgress == null) {
-                      return child;
-                    } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                      );
-                    }
-                  },
-                ) :
-                const Image(
-                  image: AssetImage('images/image-not-found.jpg'),
-                  width: 100,
-                  height: 100,
-                ),
+                child: product.image != null
+                    ? Image.network(
+                        product.image!,
+                        width: 100,
+                        height: 100,
+                        loadingBuilder: (BuildContext context, Widget child,
+                            ImageChunkEvent? loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          } else {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                        },
+                      )
+                    : const Image(
+                        image: AssetImage('images/image-not-found.jpg'),
+                        width: 100,
+                        height: 100,
+                      ),
               ),
               const Divider(
                 height: 20,
@@ -63,12 +64,12 @@ class CardCart extends StatelessWidget {
                   Text(
                     product.name,
                   ),
-                  const Text('this is an amazing phone'),
-                  const Spacer(),
-                  const Text('ref: ZFcse0984'),
-                  Text(
-                    'QTY: ${product.userId ?? ""}',
-                  ),
+                  // const Text('this is an amazing phone'),
+                  // const Spacer(),
+                  // const Text('ref: ZFcse0984'),
+                  // Text(
+                  //   'QTY: ${product.userId ?? ""}',
+                  // ),
                   const Spacer(),
                 ],
               ),
