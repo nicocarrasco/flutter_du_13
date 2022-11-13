@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_du_13/constants/colors.dart';
 import 'package:flutter_du_13/firebase/product.dart';
+import 'package:flutter_du_13/providers/order.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/produit_provider.dart';
@@ -29,11 +32,12 @@ class _CartPage extends State<Cart> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cart'),
+        title: const Text('Panier'),
       ),
       body: selectedProduct.isEmpty
           ? const Center(
-              child: Text("Your cart is empty", style: TextStyle(fontSize: 24)),
+              child:
+                  Text("Votre panier est vide", style: TextStyle(fontSize: 24)),
             )
           : Column(
               children: <Widget>[
@@ -42,8 +46,8 @@ class _CartPage extends State<Cart> {
                   child: Row(
                     children: <Widget>[
                       Text(
-                        '${selectedProduct.length} ${selectedProduct.length > 1 ? "items" : "item"}',
-                      )
+                        '${selectedProduct.length} ${selectedProduct.length > 1 ? "produits" : "produit"}',
+                      ),
                     ],
                   ),
                 ),
@@ -71,7 +75,7 @@ class _CartPage extends State<Cart> {
                                           .showSnackBar(
                                         SnackBar(
                                           content: Text(
-                                            '${productProv.selectedProduct[index].name} dismissed',
+                                            '${productProv.selectedProduct[index].name} supprimé du panier',
                                           ),
                                         ),
                                       );
@@ -116,7 +120,7 @@ class _CartPage extends State<Cart> {
                                               .showSnackBar(
                                             SnackBar(
                                               content: Text(
-                                                '${productProv.selectedProduct[index].name} dismissed',
+                                                '${productProv.selectedProduct[index].name} supprimé du panier',
                                               ),
                                             ),
                                           );
@@ -142,15 +146,71 @@ class _CartPage extends State<Cart> {
                   ),
                 ),
                 Padding(
-                  padding:
-                      const EdgeInsets.only(right: 20, top: 10, bottom: 20),
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: 10,
+                    bottom: 20,
+                  ),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      const Spacer(),
                       Text(
                         selectedProduct.isNotEmpty
                             ? 'Total: ${selectedProduct.map((Product e) => e.price).reduce((int value, int element) => value + element)} €'
                             : '0€',
+                      ),
+                      const Spacer(),
+                      ElevatedButton(
+                        onPressed: () async {
+                          final String message = await OrderProvider().addOrder(
+                            order: Order(
+                              products: selectedProduct
+                                  .map((Product e) => e.name)
+                                  .toList(),
+                              price: selectedProduct
+                                  .map((Product e) => e.price)
+                                  .reduce(
+                                    (int value, int element) => value + element,
+                                  ),
+                              date: DateTime.now(),
+                            ),
+                          );
+                          if (message != "Success") {
+                            await Fluttertoast.showToast(
+                              msg: message,
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              backgroundColor: errorColor,
+                              webBgColor: "#FF6666",
+                              webShowClose: true,
+                              webPosition: "center",
+                              textColor: backgroundLighterColor,
+                              fontSize: 16.0,
+                              timeInSecForIosWeb: 2,
+                            );
+                          } else {
+                            setState(() {
+                              selectedProduct:
+                              [];
+                            });
+                            Provider.of<ProduitProvider>(context, listen: false)
+                                .removeAllProducts();
+                            await Fluttertoast.showToast(
+                              msg: "Commande passée ajouté avec succès",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              backgroundColor: Colors.green,
+                              webBgColor: "#4CAF50",
+                              webShowClose: true,
+                              webPosition: "center",
+                              textColor: backgroundLighterColor,
+                              fontSize: 16.0,
+                              timeInSecForIosWeb: 2,
+                            );
+                          }
+                        },
+                        child: const Text('Commander'),
                       ),
                     ],
                   ),

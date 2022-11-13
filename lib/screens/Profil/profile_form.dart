@@ -91,7 +91,7 @@ class _ProfilFormState extends State<ProfilForm> {
                     hintStyle: const TextStyle(
                       fontSize: 12,
                     ),
-                    hintText: "Nom d'utilisateur",
+                    hintText: "John Doe",
                     prefixIcon: const Icon(Icons.person, size: 11),
                     suffix: _isNameLoading
                         ? const SizedBox(

@@ -27,24 +27,28 @@ class Detail extends StatelessWidget {
                     child: SizedBox(
                       height: 250,
                       child: Center(
-                        child: product.image != null ?
-                        Image.network(
-                          product.image!,
-                          width: 100,
-                          height: 100,
-                          loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                            if (loadingProgress == null) {
-                              return child;
-                            } else {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                              );
-                            }
-                          },
-                        ) :
-                        const Image(
-                          image: AssetImage('images/image-not-found.jpg'),
-                        ),
+                        child: product.image != null
+                            ? Image.network(
+                                product.image!,
+                                width: 100,
+                                height: 100,
+                                loadingBuilder: (
+                                  BuildContext context,
+                                  Widget child,
+                                  ImageChunkEvent? loadingProgress,
+                                ) {
+                                  if (loadingProgress == null) {
+                                    return child;
+                                  } else {
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  }
+                                },
+                              )
+                            : const Image(
+                                image: AssetImage('images/image-not-found.jpg'),
+                              ),
                       ),
                     ),
                   ),
@@ -88,7 +92,7 @@ class Detail extends StatelessWidget {
                       productProv.addProduct(product);
                       Navigator.pop(context);
                     },
-                    child: const Text('Buy'),
+                    child: const Text('Ajouter au panier'),
                   ),
                 ),
               ],

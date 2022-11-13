@@ -33,8 +33,11 @@ class CardCart extends StatelessWidget {
                         product.image!,
                         width: 100,
                         height: 100,
-                        loadingBuilder: (BuildContext context, Widget child,
-                            ImageChunkEvent? loadingProgress) {
+                        loadingBuilder: (
+                          BuildContext context,
+                          Widget child,
+                          ImageChunkEvent? loadingProgress,
+                        ) {
                           if (loadingProgress == null) {
                             return child;
                           } else {
