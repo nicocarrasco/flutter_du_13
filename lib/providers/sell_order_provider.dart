@@ -6,7 +6,7 @@ import 'package:flutter_du_13/providers/product.dart';
 
 class SellOrder {
   SellOrder({
-    required this.product,
+    required this.products,
     required this.price,
     this.buyerName,
     required this.date,
@@ -14,13 +14,13 @@ class SellOrder {
   });
 
   SellOrder.fromMap(Map<String, dynamic> snapshot)
-      : product = snapshot['product'] ?? '',
+      : products = snapshot['products'] ?? '',
         price = snapshot['price'] ?? '',
         date = snapshot['date'].toDate() ?? '',
         buyerName = snapshot['buyerName'] ?? '',
         userId = snapshot['userId'] ?? '';
 
-  final String product;
+  final String products;
   final DateTime date;
   final int price;
   String? buyerName;
@@ -28,7 +28,7 @@ class SellOrder {
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      "products": product,
+      "products": products,
       "price": price,
       "buyerName": "",
       "date": date,

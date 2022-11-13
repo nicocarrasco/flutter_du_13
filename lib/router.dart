@@ -5,6 +5,7 @@ import 'package:flutter_du_13/screens/Cart/cart_screen.dart';
 import 'package:flutter_du_13/screens/Home/home_screen.dart';
 import 'package:flutter_du_13/screens/Orders/orders_screen.dart';
 import 'package:flutter_du_13/screens/Profil/profil_screen.dart';
+import 'package:flutter_du_13/screens/SellOrders/sell_orders_screen.dart';
 import 'package:flutter_du_13/screens/SignIn/sign_in_screen.dart';
 import 'package:flutter_du_13/screens/SignUp/sign_up_screen.dart';
 import 'package:flutter_du_13/ui/bottom_bar.dart';
@@ -90,6 +91,16 @@ class AppRouter {
               child: const AddProductScreen(),
             ),
           ),
+          GoRoute(
+            name: "SellOrders",
+            path: '/sellOrders',
+            pageBuilder: (BuildContext context, GoRouterState state) =>
+                buildPageWithDefaultTransition<void>(
+              context: context,
+              state: state,
+              child: const SellOrdersPage(),
+            ),
+          ),
         ],
       ),
       GoRoute(
@@ -124,13 +135,14 @@ class AppRouter {
       final String homePath = state.namedLocation("Home");
       final String cartPath = state.namedLocation("Cart");
       final String orderPath = state.namedLocation("Orders");
+      final String sellOrdersPath = state.namedLocation("SellOrders");
       final String profilPath = state.namedLocation("Profil");
 
       final String addProduct = state.namedLocation("AddProduct");
 
       final List<String> authRoutes = userProvider.getRole() == "Acheteur"
           ? <String>[homePath, cartPath, orderPath, profilPath]
-          : <String>[homePath, addProduct, profilPath];
+          : <String>[homePath, addProduct, sellOrdersPath, profilPath];
 
       if ((!userProvider.isAuthenticated() || userProvider.getRole() == null) &&
           state.location != locPath &&

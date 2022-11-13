@@ -51,6 +51,10 @@ List<NavigationRailDestination> getWebSellerBottomBar() {
       label: Text(''),
     ),
     const NavigationRailDestination(
+      icon: Icon(Icons.format_list_bulleted, size: 30),
+      label: Text(''),
+    ),
+    const NavigationRailDestination(
       icon: Icon(Icons.person, size: 30),
       label: Text(''),
     ),
@@ -70,6 +74,7 @@ List<Widget> getMobileSellerBottomBar() {
   return <Widget>[
     const Icon(Icons.search, size: 30),
     const Icon(Icons.add_circle_outlined, size: 30),
+    const Icon(Icons.format_list_bulleted, size: 30),
     const Icon(Icons.person, size: 30)
   ];
 }
@@ -92,7 +97,7 @@ class _BottomBarState extends State<BottomBar> {
       //         "Acheteur";
       final List<String> routes = isBuyer
           ? <String>["/", "/cart", "/orders", "/profil"]
-          : <String>["/", "/addProduct", "/profil"];
+          : <String>["/", "/addProduct", "/sellOrders", "/profil"];
       context.go(routes[index]);
       _selectedIndex = index;
     });

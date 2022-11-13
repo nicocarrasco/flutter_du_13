@@ -195,7 +195,7 @@ class _CartPage extends State<Cart> {
                             for (Product element in selectedProduct) {
                               await SellOrderProvider().addSellOrder(
                                 sellOrder: SellOrder(
-                                  product: element.name,
+                                  products: element.name,
                                   price: element.price,
                                   date: DateTime.now(),
                                 ),
