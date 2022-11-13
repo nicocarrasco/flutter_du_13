@@ -14,10 +14,10 @@ class Order {
   Order.fromMap(Map<String, dynamic> snapshot)
       : products = snapshot['products'] ?? '',
         price = snapshot['price'] ?? '',
-        date = snapshot['date'] ?? '',
+        date = snapshot['date'].toDate() ?? '',
         userId = snapshot['userId'] ?? '';
 
-  final List<String> products;
+  final List<dynamic> products;
   final DateTime date;
   final int price;
   String? userId;
@@ -36,7 +36,10 @@ class OrderProvider extends ChangeNotifier {
   Future<List<Order>> getOrders() async {
     final List<Order> orderList = <Order>[];
     final QuerySnapshot<Map<String, dynamic>> querySnapshot =
-        await FirebaseFirestore.instance.collection("orders").get();
+        await FirebaseFirestore.instance
+            .collection("orders")
+            .orderBy('date', descending: true)
+            .get();
     final User? userCreditential = FirebaseAuth.instance.currentUser;
 
     for (int i = 0; i < querySnapshot.docs.length; i++) {

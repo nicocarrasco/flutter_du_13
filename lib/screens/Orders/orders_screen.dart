@@ -11,9 +11,18 @@ class OrdersPage extends StatefulWidget {
 
 class _OrdersPageState extends State<OrdersPage> {
   List<Order> _allOrders = <Order>[];
-  Future<void> getData(bool isSeller) async {
-    setState(() async {
-      _allOrders = await OrderProvider().getOrders();
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getData();
+    });
+    super.initState();
+  }
+
+  Future<void> getData() async {
+    final List<Order> orders = await OrderProvider().getOrders();
+    setState(() {
+      _allOrders = orders;
     });
   }
 
@@ -25,30 +34,29 @@ class _OrdersPageState extends State<OrdersPage> {
       ),
       body: Column(
         children: <Widget>[
-          Expanded(
-            child: _allOrders.isNotEmpty
-                ? Expanded(
-                    child: ListView.builder(
-                      itemCount: _allOrders.length,
-                      padding: const EdgeInsets.only(
-                        left: 10,
-                        right: 10,
-                        bottom: 10,
-                      ),
-                      itemBuilder: (BuildContext context, int index) {
-                        return CardOrder(
-                          order: _allOrders[index],
-                        );
-                      },
-                    ),
-                  )
-                : const Center(
-                    child: Text(
-                      'Vous n\'avez pas encore passé de commande',
-                      style: TextStyle(fontSize: 24),
-                    ),
-                  ),
-          ),
+          if (_allOrders.isNotEmpty)
+            Expanded(
+              child: ListView.builder(
+                itemCount: _allOrders.length,
+                padding: const EdgeInsets.only(
+                  left: 10,
+                  right: 10,
+                  bottom: 10,
+                ),
+                itemBuilder: (BuildContext context, int index) {
+                  return CardOrder(
+                    order: _allOrders[index],
+                  );
+                },
+              ),
+            )
+          else
+            const Center(
+              child: Text(
+                'Vous n\'avez pas encore passé de commande',
+                style: TextStyle(fontSize: 24),
+              ),
+            ),
         ],
       ),
     );

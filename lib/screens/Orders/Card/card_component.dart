@@ -17,28 +17,27 @@ class CardOrder extends StatelessWidget {
       ),
       child: SizedBox(
         width: 180,
-        height: 180,
-        child: Column(
-          children: <Widget>[
-            const Spacer(
-              flex: 3,
-            ),
-            Row(
-              children: <Widget>[
-                // const Text("Vous avez commandé :"),
-                // const Spacer(),
-                // Text(order.name),
-                // const Spacer(
-                //   flex: 2,
-                // ),
-                Text('Prix total : ${order.price} €'),
-                // const Spacer()
-              ],
-            ),
-            const Spacer(
-              flex: 2,
-            ),
-          ],
+        height: 130,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text("Vous avez commandé : ${order.products.join(', ')}"),
+              const SizedBox(height: 10),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Prix total : ${order.price} €'),
+                  const SizedBox(height: 10),
+                  Text(
+                    'Date : ${order.date.day}/${order.date.month}/${order.date.year} à ${order.date.hour}h${order.date.minute}',
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
