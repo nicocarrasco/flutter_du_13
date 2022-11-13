@@ -22,6 +22,9 @@ Run `flutter run -d chrome`.
 
 ### On Android
 
+Install Android Studio.
+Open an Android Simulator or connect an Android device.
+Then run `flutter run`.
 More infos on : https://docs.flutter.dev/get-started/install/macos#install-android-studio
 
 
@@ -68,3 +71,17 @@ More infos on : https://docs.flutter.dev/get-started/install/macos#install-andro
 
   provider: The provider dependency give us the right to share some variable between the screens. This is verry helpful to retrive the data from another scren and perfom the action choosen.
   More infos on : https://pub.dev/packages/provider
+  
+  ### Architecture
+  
+  `/assets` Contain all images and fonts of the application
+  `/android` Contain all files relative to Android execution.
+  `/ios` Contain all files relative to iOS execution.
+  `/lib/` Contain all source code
+  `/lib/animations` File code for animation
+  `/lib/constants` Files with colors and responsive constants
+  `/lib/providers` Files code with all the model provider
+  `/lib/screens` Folders for each page of the application
+  `/lib/ui` shared components
+  `/lib/utils` functions that can be used in all the application
+  `/lib/router.dart` Contain all route of the application.
