@@ -19,20 +19,22 @@ class _ProfilPictureState extends State<ProfilPicture> {
   bool _isLoading = false;
 
   void _listener() async {
-    final String picture =
-        await Provider.of<UserProvider>(context, listen: false).getPicture();
-    if (_picture != picture) {
-      setState(() {
-        _picture = picture;
-        _isLoading = false;
-      });
+    if (mounted) {
+      final String picture =
+          await Provider.of<UserProvider>(context, listen: false).getPicture();
+      if (_picture != picture) {
+        setState(() {
+          _picture = picture;
+          _isLoading = false;
+        });
+      }
     }
   }
 
   @override
   void initState() {
-    model.addListener(_listener);
     super.initState();
+    model.addListener(_listener);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _asyncMethod();
     });
@@ -69,7 +71,7 @@ class _ProfilPictureState extends State<ProfilPicture> {
         msg: message,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
-        backgroundColor: !isError ? errorColor : primaryColor,
+        backgroundColor: isError ? errorColor : primaryColor,
         webBgColor: "#72B2D5",
         webShowClose: true,
         webPosition: "center",
@@ -84,7 +86,7 @@ class _ProfilPictureState extends State<ProfilPicture> {
   Widget build(BuildContext context) {
     return Center(
       child: Column(
-        children: <Widget> [
+        children: <Widget>[
           if (_isLoading)
             Container(
               margin: const EdgeInsets.all(20),

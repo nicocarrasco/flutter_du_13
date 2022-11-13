@@ -22,6 +22,8 @@ class UserProvider extends ChangeNotifier {
                   <void>{_role = event.data()!["role"], notifyListeners()}
               },
             );
+      } else {
+        _role = null;
       }
 
       notifyListeners();
@@ -134,7 +136,7 @@ class UserProvider extends ChangeNotifier {
   }
 
   Future<void> signOut() async {
-     await FirebaseAuth.instance.signOut();
+    await FirebaseAuth.instance.signOut();
   }
 
   Future<String> signIn({

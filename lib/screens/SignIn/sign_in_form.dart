@@ -155,15 +155,7 @@ class _SignInFormState extends State<SignInForm> {
               ),
             ),
           ),
-          const SizedBox(height: 45),
-          const Text(
-            style: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
-            ),
-            "Vous n’avez pas encore de compte ?",
-          ),
-          const SizedBox(height: 6),
+          const SizedBox(height: 15),
           TextButton(
             onPressed: () => context.go('/sign-up'),
             child: const Text(

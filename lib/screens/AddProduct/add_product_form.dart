@@ -21,7 +21,8 @@ class AddProductForm extends StatefulWidget {
 class _AddProductFormState extends State<AddProductForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _productNameController = TextEditingController();
-  final TextEditingController _productDescriptionController = TextEditingController();
+  final TextEditingController _productDescriptionController =
+      TextEditingController();
   final TextEditingController _productPriceController = TextEditingController();
   XFile? _imagefile;
 
@@ -57,15 +58,23 @@ class _AddProductFormState extends State<AddProductForm> {
             ),
           ),
           const SizedBox(height: 51),
-          MultipleImagePicker(notifyParent: _manageStateForChildWidget,),
+          MultipleImagePicker(
+            notifyParent: _manageStateForChildWidget,
+          ),
           const SizedBox(height: 20),
           if (_imagefile != null)
-          SizedBox(
-            height: 200,
-            child: Expanded(
-              child: kIsWeb? Image.network(_imagefile!.path) : Image.file(File(_imagefile!.path)),
+            SizedBox(
+              height: 200,
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    child: kIsWeb
+                        ? Image.network(_imagefile!.path)
+                        : Image.file(File(_imagefile!.path)),
+                  ),
+                ],
+              ),
             ),
-          ),
           const SizedBox(height: 40),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -145,8 +154,8 @@ class _AddProductFormState extends State<AddProductForm> {
                   // prefixIcon: Icon(Icons.lock, size: 14),
                 ),
                 inputFormatters: <TextInputFormatter>[
-                  	FilteringTextInputFormatter.digitsOnly
-	              ],
+                  FilteringTextInputFormatter.digitsOnly
+                ],
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
                     return 'Veuillez remplir ce champ';
@@ -170,21 +179,20 @@ class _AddProductFormState extends State<AddProductForm> {
                   webPosition: "center",
                   textColor: backgroundLighterColor,
                   fontSize: 16.0,
-                  timeInSecForIosWeb: 2,);
+                  timeInSecForIosWeb: 2,
+                );
                 return;
               }
               if (_formKey.currentState!.validate()) {
-                final String message =
-                    await ProductProvider()
-                      .addProduct(
-                        product: Product(
-                          picture: "",
-                          name: _productNameController.text,
-                          description: _productDescriptionController.text,
-                          price: int.parse(_productPriceController.text),
-                        ),
-                        image: _imagefile,
-                      );
+                final String message = await ProductProvider().addProduct(
+                  product: Product(
+                    picture: "",
+                    name: _productNameController.text,
+                    description: _productDescriptionController.text,
+                    price: int.parse(_productPriceController.text),
+                  ),
+                  image: _imagefile,
+                );
                 if (message != "Success") {
                   await Fluttertoast.showToast(
                     msg: message,
