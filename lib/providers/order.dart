@@ -17,7 +17,7 @@ class Order {
         date = snapshot['date'] ?? '',
         userId = snapshot['userId'] ?? '';
 
-  final Map<String, dynamic> products;
+  final List<String> products;
   final DateTime date;
   final int price;
   String? userId;

@@ -26,4 +26,9 @@ class ProduitProvider extends ChangeNotifier {
     selectedProduct.removeAt(index);
     notifyListeners();
   }
+
+  void removeAllProducts() {
+    selectedProduct = [];
+    notifyListeners();
+  }
 }

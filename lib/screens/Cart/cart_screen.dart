@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_du_13/constants/colors.dart';
 import 'package:flutter_du_13/firebase/product.dart';
+import 'package:flutter_du_13/providers/order.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/produit_provider.dart';
@@ -159,7 +162,54 @@ class _CartPage extends State<Cart> {
                       ),
                       const Spacer(),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          final String message = await OrderProvider().addOrder(
+                            order: Order(
+                              products: selectedProduct
+                                  .map((Product e) => e.name)
+                                  .toList(),
+                              price: selectedProduct
+                                  .map((Product e) => e.price)
+                                  .reduce(
+                                    (int value, int element) => value + element,
+                                  ),
+                              date: DateTime.now(),
+                            ),
+                          );
+                          if (message != "Success") {
+                            await Fluttertoast.showToast(
+                              msg: message,
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              backgroundColor: errorColor,
+                              webBgColor: "#FF6666",
+                              webShowClose: true,
+                              webPosition: "center",
+                              textColor: backgroundLighterColor,
+                              fontSize: 16.0,
+                              timeInSecForIosWeb: 2,
+                            );
+                          } else {
+                            setState(() {
+                              selectedProduct:
+                              [];
+                            });
+                            Provider.of<ProduitProvider>(context, listen: false)
+                                .removeAllProducts();
+                            await Fluttertoast.showToast(
+                              msg: "Commande passée ajouté avec succès",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              backgroundColor: Colors.green,
+                              webBgColor: "#4CAF50",
+                              webShowClose: true,
+                              webPosition: "center",
+                              textColor: backgroundLighterColor,
+                              fontSize: 16.0,
+                              timeInSecForIosWeb: 2,
+                            );
+                          }
+                        },
                         child: const Text('Commander'),
                       ),
                     ],
