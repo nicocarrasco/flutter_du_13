@@ -19,20 +19,22 @@ class _ProfilPictureState extends State<ProfilPicture> {
   bool _isLoading = false;
 
   void _listener() async {
-    final String picture =
-        await Provider.of<UserProvider>(context, listen: false).getPicture();
-    if (_picture != picture) {
-      setState(() {
-        _picture = picture;
-        _isLoading = false;
-      });
+    if (mounted) {
+      final String picture =
+          await Provider.of<UserProvider>(context, listen: false).getPicture();
+      if (_picture != picture) {
+        setState(() {
+          _picture = picture;
+          _isLoading = false;
+        });
+      }
     }
   }
 
   @override
   void initState() {
-    model.addListener(_listener);
     super.initState();
+    model.addListener(_listener);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _asyncMethod();
     });
